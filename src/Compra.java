@@ -11,6 +11,22 @@ public class Compra {
     private String codigoAficionado;
     private static int contador = 0;
 
+    public Compra(String codigoCompra, String tipo,
+            String codigoReferencia, Date fechaCompra,
+            int cantidad, double valorPagado,
+            String codigoAficionado) {
+
+        this.codigoCompra = codigoCompra;
+        this.tipo = tipo;
+        this.codigoReferencia = codigoReferencia;
+        this.fechaCompra = fechaCompra;
+        this.cantidad = cantidad;
+        this.valorPagado = valorPagado;
+        this.codigoAficionado = codigoAficionado;
+        contador++;
+
+    }
+
     public String getCodigoCompra() {
         return codigoCompra;
     }
