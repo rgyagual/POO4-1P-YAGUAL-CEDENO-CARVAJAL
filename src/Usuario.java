@@ -1,6 +1,6 @@
 public abstract class Usuario {
 
-    protected String codigo;
+    protected String codigoUnico;
     protected String cedula;
     protected String nombres;
     protected String apellidos;
@@ -9,7 +9,7 @@ public abstract class Usuario {
     protected String correo;
     protected char rol;
 
-    public Usuario(String codigo,
+    public Usuario(String codigoUnico,
             String cedula,
             String nombres,
             String apellidos,
@@ -18,7 +18,7 @@ public abstract class Usuario {
             String correo,
             char rol) {
 
-        this.codigo = codigo;
+        this.codigoUnico = codigoUnico;
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -28,12 +28,12 @@ public abstract class Usuario {
         this.rol = rol;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCodigoUnico() {
+        return codigoUnico;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCodigoUnico(String codigoUnico) {
+        this.codigoUnico = codigoUnico;
     }
 
     public String getCedula() {
@@ -90,6 +90,19 @@ public abstract class Usuario {
 
     public void setRol(char rol) {
         this.rol = rol;
+    }
+
+    public abstract void consultarEntradas();
+
+    @Override
+    public String toString() {
+        return "\nCodigo Unico: " + codigoUnico +
+                "\nCedula: " + cedula +
+                "\nNombres: " + nombres +
+                "\nApellidos: " + apellidos +
+                "\nCorreo: " + correo +
+                "\nUsuario: "+usuario+
+                "\nRol: " + rol;
     }
 
 }
