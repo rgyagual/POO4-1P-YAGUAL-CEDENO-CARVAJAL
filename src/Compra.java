@@ -11,12 +11,11 @@ public class Compra {
     private String codigoAficionado;
     private static int contador = 0;
 
-    public Compra(String codigoCompra, String tipo,
+    public Compra(String tipo,
             String codigoReferencia, Date fechaCompra,
             int cantidad, double valorPagado,
             String codigoAficionado) {
 
-        this.codigoCompra = codigoCompra;
         this.tipo = tipo;
         this.codigoReferencia = codigoReferencia;
         this.fechaCompra = fechaCompra;
@@ -24,7 +23,7 @@ public class Compra {
         this.valorPagado = valorPagado;
         this.codigoAficionado = codigoAficionado;
         contador++;
-
+        generarCodigoCompra();
     }
 
     public String getCodigoCompra() {
@@ -59,10 +58,6 @@ public class Compra {
         return contador;
     }
 
-    public void setCodigoCompra(String codigoCompra) {
-        this.codigoCompra = codigoCompra;
-    }
-
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
@@ -79,12 +74,24 @@ public class Compra {
         this.cantidad = cantidad;
     }
 
-    public void setValorPagado(double valorPagado) {
-        this.valorPagado = valorPagado;
-    }
-
     public void setCodigoAficionado(String codigoAficionado) {
         this.codigoAficionado = codigoAficionado;
+    }
+
+    public void generarCodigoCompra() {
+        String codigoCompra = String.format("C%03d", contador);
+        this.codigoCompra = codigoCompra;
+    }
+
+    @Override
+    public String toString() {
+        return "Código: " + codigoCompra + 
+        "\nTipo: " + tipo + 
+        "\nCodigo de Referencia: " + codigoReferencia+ 
+        "\nFecha: " + fechaCompra + 
+        "\nCantidad: " + cantidad + 
+        "\nValor Pagado: " + valorPagado+ 
+        "\nCodigo de Aficionado: " + codigoAficionado;
     }
 
 }
