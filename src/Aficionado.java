@@ -1,13 +1,25 @@
-public class Aficionado {
+import java.util.ArrayList;
+
+public class Aficionado extends Usuario {
     private String celular;
     private String PaisFavorito;
+    private ArrayList<Compra> historialCompras;
 
-    public Aficionado(String celular, String PaisFavorito) {
+    public Aficionado(String codigoUnico, String cedula,
+            String nombres, String apellidos,
+            String usuario, String contraseña,
+            String correo, String celular,
+            Rol rol, String paisFavorito) {
+        super(codigoUnico, cedula, nombres,
+                apellidos, usuario, contraseña,
+                correo, rol);
+
         this.celular = celular;
-        this.PaisFavorito = PaisFavorito;
+        PaisFavorito = paisFavorito;
+        historialCompras = new ArrayList<>();
     }
 
-    public String getcelular() {
+    public String getCelular() {
         return celular;
     }
 
@@ -22,4 +34,7 @@ public class Aficionado {
     public void setPaisFavorito(String PaisFavorito) {
         this.PaisFavorito = PaisFavorito;
     }
+
+    @Override
+    public void consultarEntradas(){}
 }
