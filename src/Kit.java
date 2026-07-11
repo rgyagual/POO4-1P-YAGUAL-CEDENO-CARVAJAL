@@ -70,15 +70,15 @@ public class Kit {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String partidos = "";
-        for(Partido p: partidosIncluidos){
-            partidos +=  "\n-" + p.getEquipoLocal()+" vs "+ p.getEquipoVisitante();
-        } 
-        return nombreKit+
-        "\nIncluye: "+partidos+
-        "\n\nPrecio: "+precioKit+
-        "\nDisponibles: "+cantidadDisponible;
+        for (Partido p : partidosIncluidos) {
+            partidos += "\n-" + p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
+        }
+        return nombreKit +
+                "\nIncluye: " + partidos +
+                "\n\nPrecio: " + precioKit +
+                "\nDisponibles: " + cantidadDisponible;
     }
 
 }
