@@ -7,7 +7,8 @@ public abstract class Usuario {
     protected String usuario;
     protected String contraseña;
     protected String correo;
-    protected char rol;
+    protected Rol rol;
+    
 
     public Usuario(String codigoUnico,
             String cedula,
@@ -16,7 +17,7 @@ public abstract class Usuario {
             String usuario,
             String contraseña,
             String correo,
-            char rol) {
+            Rol rol) {
 
         this.codigoUnico = codigoUnico;
         this.cedula = cedula;
@@ -83,14 +84,7 @@ public abstract class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
-    public char getRol() {
-        return rol;
-    }
-
-    public void setRol(char rol) {
-        this.rol = rol;
-    }
+   
 
     public abstract void consultarEntradas();
 
