@@ -14,12 +14,21 @@ public class Partido {
     private int entradaPreferencial;
     private int entradaVip;
 
+    // Variables de precio añadidas bajo criterio propio.
+    // Dado que la guía no define precios, se implementaron para permitir al
+    // organizador establecer precios personalizados para cada partido.
+   
+    private double precioGeneral;
+    private double precioPreferencial;
+    private double precioVip;
+
     public Partido(String codigoPartido, String equipoLocal,
             String equipoVisitante, Date fechaPartido,
             String estadio, String ciudad,
             String fase, int capacidad,
             int entradaGeneral, int entradaPreferencial,
-            int entradaVip) {
+            int entradaVip, double precioGeneral,
+            double precioPreferencial, double precioVip) {
 
         this.codigoPartido = codigoPartido;
         this.equipoLocal = equipoLocal;
@@ -32,6 +41,9 @@ public class Partido {
         this.entradaGeneral = entradaGeneral;
         this.entradaPreferencial = entradaPreferencial;
         this.entradaVip = entradaVip;
+        this.precioGeneral = precioGeneral;
+        this.precioPreferencial = precioPreferencial;
+        this.precioVip = precioVip;
     }
 
     public String getCodigoPartido() {
@@ -122,4 +134,47 @@ public class Partido {
         this.entradaVip = entradaVip;
     }
 
+    public double getPrecioGeneral() {
+        return precioGeneral;
+    }
+
+    public void setPrecioGeneral(double precioGeneral) {
+        this.precioGeneral = precioGeneral;
+    }
+
+    public double getPrecioPreferencial() {
+        return precioPreferencial;
+    }
+
+    public void setPrecioPreferencial(double precioPreferencial) {
+        this.precioPreferencial = precioPreferencial;
+    }
+
+    public double getPrecioVip() {
+        return precioVip;
+    }
+
+    public void setPrecioVip(double precioVip) {
+        this.precioVip = precioVip;
+    }
+
+    @Override
+    public String toString() {
+        String partido = equipoLocal + " vs " + equipoVisitante;
+        String infoZonas = String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.GENERAL, entradaGeneral,
+                precioGeneral) +
+                String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.PREFERENCIAL, entradaPreferencial,
+                        precioPreferencial)
+                +
+                String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.VIP, entradaVip, precioVip);
+
+        return "Código: " + codigoPartido +
+                "\nPartido: " + partido +
+                "\nFecha: " + fechaPartido +
+                "\nEstadio: " + estadio +
+                "\nCiudad: " + ciudad +
+                "\nFase: " + fase +
+                "\nZonas Disponibles: " + "\n" + infoZonas +
+                "\n--------------------------------------------------";
+    }
 }
