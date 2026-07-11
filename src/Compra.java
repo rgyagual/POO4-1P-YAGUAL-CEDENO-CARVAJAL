@@ -58,13 +58,8 @@ public class Compra {
     }
 
     // ================================
-    // Getters
+    // Getters y Setters
     // ================================
-    /**
-     * Obtiene el dato requerido
-     * 
-     * @return Dato requerido
-     */
     public String getCodigoCompra() {
         return codigoCompra;
     }
@@ -96,15 +91,7 @@ public class Compra {
     public static int getContador() {
         return contador;
     }
-    // ======================================
-    // Setters
-    // ======================================
 
-    /**
-     * Cambia el valor de una variable de instancia
-     * 
-     * @param Recibe el nuevo valor de la variable
-     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }

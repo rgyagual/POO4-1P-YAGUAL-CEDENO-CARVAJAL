@@ -1,12 +1,32 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Administra la información principal del sistema de venta y gestión
+ * de entradas para el Mundial.
+ * Mantiene el registro de usuarios, partidos, kits y compras,
+ * además de gestionar el proceso de inicio de sesión y ejecución de opciones
+ * del menú.
+ * 
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class Sistema {
+    // =======================================
+    // ATRIBUTOS
+    // =======================================
 
+    /** Lista de usuarios registrados en el sistema (txt) */
     private ArrayList<Usuario> usuarios;
+    /** Lista de partidos registrados en el sistema (txt) */
     private ArrayList<Partido> partidos;
+    /** Lista de Kits registrados en el sistema (txt) */
     private ArrayList<Kit> kits;
+    /** Lista de Compras Totales realizadas */
     private ArrayList<Compra> compras;
+
+    // ================================
+    // Getters y Setters
+    // =================================
 
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
@@ -40,17 +60,28 @@ public class Sistema {
         this.compras = compras;
     }
 
+    /**
+     * Permite a un usuario iniciar sesión en el sistema verificando
+     * sus credenciales y mostrando el menú correspondiente según su rol.
+     * Si la autenticación falla o la verificación de identidad no es
+     * confirmada, la sesión se cierra.
+     */
     public void iniciarSesion() {
+
+        // Solicitud de credenciales al usuario
         Scanner sc = new Scanner(System.in);
         System.out.println("=====INICIO DE SESIÓN=====");
         System.out.print("Usuario: ");
         String usuario = sc.nextLine();
         System.out.print("Contraseña: ");
         String contraseña = sc.nextLine();
-
+        boolean autenticado = false;
+        // Busca un usuario con las credenciales ingresadas
         for (Usuario u : usuarios) {
             if (u.getUsuario().equals(usuario) && u.getContraseña().equals(contraseña)) {
                 System.out.println("Usuario autenticado correctamente.");
+                autenticado = true;
+                // Si el usuario autenticado es un aficionado
                 if (u instanceof Aficionado) {
                     Aficionado af = (Aficionado) u;
                     System.out.println("Rol detectado: AFICIONADO");
@@ -58,6 +89,7 @@ public class Sistema {
                     System.out.println("Celular registrado: " + af.getCelular());
                     System.out.print("¿Este número de celular es correcto? (S/N): ");
                     String validarNumero = sc.nextLine();
+                    // Muestra menú de opciones de Aficionado
                     if (validarNumero.equals("S")) {
                         System.out.println("Identidad confirmada.");
                         System.out.println("Menú de Aficionado: ");
@@ -72,10 +104,8 @@ public class Sistema {
                         switch (opcionElegida) {
                             case 1:
                                 System.out.println("Partidos encontrados: ");
-                                for(Partido p: partidos){
-                                    for(int i = 1; i < partidos.size()+1;i++){
-                                        System.out.println(i+". "+p);
-                                    }
+                                for (int i = 0; i < partidos.size(); i++) {
+                                    System.out.println((i + 1) + ". " + partidos.get(i));
                                 }
                                 break;
                             case 2:
@@ -97,6 +127,7 @@ public class Sistema {
                         System.out.println("\nSaliendo del sistema...");
                         break;
                     }
+                    // Si el usuario autenticado es un Organizador
                 } else if (u instanceof Organizador) {
                     Organizador og = (Organizador) u;
                     System.out.println("Rol detectado: ORGANIZADOR");
@@ -104,6 +135,7 @@ public class Sistema {
                     System.out.println("Empresa asignada: " + og.getEmpresa());
                     System.out.print("Esta empresa es correcta(S/N): ");
                     String validarEmpresa = sc.nextLine();
+                    // Muestra menú de opciones de Organizador
                     if (validarEmpresa.equals("S")) {
                         System.out.println("Menú de Organizador:");
                         System.out.println("1. Consultar entradas");
@@ -133,9 +165,9 @@ public class Sistema {
 
                     }
                 }
-            }else{
-                System.out.println("Usuario o contraseña incorrectos.");
             }
+        } if(!autenticado){
+            System.out.println("Usuario o contraseña incorrectos.");
         }
     }
 }
