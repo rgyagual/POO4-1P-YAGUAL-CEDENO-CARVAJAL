@@ -53,11 +53,11 @@ public class Kit {
         this.precioKit = precioKit;
     }
 
-    public int getcantidadDisponible() {
+    public int getCantidadDisponible() {
         return cantidadDisponible;
     }
 
-    public void setcantidadDisponible(int cantidadDisponible) {
+    public void setCantidadDisponible(int cantidadDisponible) {
         this.cantidadDisponible = cantidadDisponible;
     }
 
@@ -69,13 +69,16 @@ public class Kit {
         this.partidosIncluidos = partidosIncluidos;
     }
 
-    public void mostrarKit() {
-        System.out.println("Incluye: ");
-        for (Partido p : partidosIncluidos) {
-            System.out.println("-" + p.getEquipoLocal()+" vs "+ p.getEquipoVisitante());
-        }
-        System.out.println("Precio: " + precioKit);
-        System.out.println("Disponibles: " + cantidadDisponible);
+    @Override
+    public String toString(){
+        String partidos = "";
+        for(Partido p: partidosIncluidos){
+            partidos +=  "\n-" + p.getEquipoLocal()+" vs "+ p.getEquipoVisitante();
+        } 
+        return nombreKit+
+        "\nIncluye: "+partidos+
+        "\n\nPrecio: "+precioKit+
+        "\nDisponibles: "+cantidadDisponible;
     }
 
 }
