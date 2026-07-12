@@ -1,4 +1,3 @@
-CodigoUnico|Cedula|Nombres|Apellidos|Usuario|Contrasena|Correo|Rol
 A001|0923456789|Carlos|Mendoza|cmendoza|mundial2026|carlos.mendoza@email.com|A
 A002|0912345678|Ana|Lopez|alopez|ecuador2026|ana.lopez@email.com|A
 A003|0934567890|Miguel|Santos|msantos|futbol2026|miguel.santos@email.com|A
