@@ -5,11 +5,11 @@ public class Organizador extends Usuario {
     public Organizador(String codigoUnico, String cedula,
             String nombres, String apellidos,
             String usuario, String contraseña, String correo,
-            Rol rol, String empresa, String cargo) {
+            String empresa, String cargo) {
 
         super(codigoUnico, cedula, nombres,
                 apellidos, usuario, contraseña,
-                correo, rol);
+                correo);
         this.empresa = empresa;
         this.cargo = cargo;
     }

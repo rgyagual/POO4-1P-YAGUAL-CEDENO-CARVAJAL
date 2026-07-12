@@ -16,8 +16,7 @@ public abstract class Usuario {
             String apellidos,
             String usuario,
             String contraseña,
-            String correo,
-            Rol rol) {
+            String correo) {
 
         this.codigoUnico = codigoUnico;
         this.cedula = cedula;
@@ -26,7 +25,6 @@ public abstract class Usuario {
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.correo = correo;
-        this.rol = rol;
     }
 
     public String getCodigoUnico() {

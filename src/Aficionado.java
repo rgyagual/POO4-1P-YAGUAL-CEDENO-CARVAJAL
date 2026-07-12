@@ -9,10 +9,10 @@ public class Aficionado extends Usuario {
             String nombres, String apellidos,
             String usuario, String contraseña,
             String correo, String celular,
-            Rol rol, String paisFavorito) {
+            String paisFavorito) {
         super(codigoUnico, cedula, nombres,
                 apellidos, usuario, contraseña,
-                correo, rol);
+                correo);
 
         this.celular = celular;
         PaisFavorito = paisFavorito;
