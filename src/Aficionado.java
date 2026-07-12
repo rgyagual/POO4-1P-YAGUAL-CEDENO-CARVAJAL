@@ -34,5 +34,12 @@ public class Aficionado extends Usuario {
     }
 
     @Override
-    public void consultarEntradas(ArrayList<Compra> compras){}
+    public void consultarEntradas(ArrayList<Compra> compras){
+        System.out.println("COMPRAS REALIZADAS");
+        for(Compra c: compras){
+            if(c.getCodigoAficionado().equals(this.getCodigoUnico())){
+                System.out.println(c.toString());
+            }
+        }
+    }
 }
