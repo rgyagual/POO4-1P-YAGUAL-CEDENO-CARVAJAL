@@ -1,15 +1,43 @@
+/**
+ * Representa la clase abstracta base para todos los usuarios del sistema.
+ * Contiene los atributos y métodos comunes que comparten los aficionados
+ * y los organizadores.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ * 
+ */
 public abstract class Usuario {
-
+    // ====================================
+    // ATRIBUTOS
+    // ====================================
+    /** Código Único de usuario */
     protected String codigoUnico;
+    /** Número de cédula del usuario */
     protected String cedula;
+    /** Nombre del Usuario */
     protected String nombres;
+    /** Apellido del Usuario */
     protected String apellidos;
+    /** Nombre de usuario registrado en el Sistema */
     protected String usuario;
+    /** Contraseña del usuario registrada en el Sistema */
     protected String contraseña;
+    /** Correo del Usuario registrado en el Sistema */
     protected String correo;
+    /** Rol de Usuario dentro del Sistema */
     protected Rol rol;
-    
 
+    /**
+     * Inicia un Usuario con su información básica
+     * 
+     * @param codigoUnico Código único del usuario
+     * @param cedula      Número de cédula del usuario
+     * @param nombres     Nombre del usuario
+     * @param apellidos   Apellido del usuario
+     * @param usuario     Nombre de usuario para inicio de sesión
+     * @param contraseña  Contraseña del usuario
+     * @param correo      Correo electrónico del usuario
+     */
     public Usuario(String codigoUnico,
             String cedula,
             String nombres,
@@ -26,6 +54,9 @@ public abstract class Usuario {
         this.contraseña = contraseña;
         this.correo = correo;
     }
+    // ===================================
+    // Getters y Setters
+    // ===================================
 
     public String getCodigoUnico() {
         return codigoUnico;
@@ -82,10 +113,20 @@ public abstract class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-   
+    // ================================
 
+    /**
+     * Método abstracto que permite consultar las entradas al usuario.
+     * Este método debe ser implementado por las subclases de Usuario, cada una con
+     * su implementación (Sobreescritura)
+     */
     public abstract void consultarEntradas();
 
+    /**
+     * Devuelve una representación en texto con la información del usuario
+     * 
+     * @return Cadena con datos del usuario.
+     */
     @Override
     public String toString() {
         return "\nCodigo Unico: " + codigoUnico +
@@ -93,7 +134,7 @@ public abstract class Usuario {
                 "\nNombres: " + nombres +
                 "\nApellidos: " + apellidos +
                 "\nCorreo: " + correo +
-                "\nUsuario: "+usuario+
+                "\nUsuario: " + usuario +
                 "\nRol: " + rol;
     }
 

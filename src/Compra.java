@@ -111,6 +111,7 @@ public class Compra {
     public void setCodigoAficionado(String codigoAficionado) {
         this.codigoAficionado = codigoAficionado;
     }
+    // ================================
 
     /**
      * Genera el codigo de Compra usando el contador de compras registradas
