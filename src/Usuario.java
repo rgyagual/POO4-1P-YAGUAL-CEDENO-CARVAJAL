@@ -27,6 +27,9 @@ public abstract class Usuario {
     /** Rol de Usuario dentro del Sistema */
     protected Rol rol;
 
+    // ====================
+    // CONSTRUCTOR
+    // ====================
     /**
      * Inicia un Usuario con su información básica
      * 

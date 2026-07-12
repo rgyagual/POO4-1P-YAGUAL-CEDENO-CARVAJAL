@@ -19,13 +19,13 @@ public class Sistema {
     // =======================================
 
     /** Lista de usuarios registrados en el sistema (txt) */
-    private ArrayList<Usuario> usuarios;
+    private ArrayList<Usuario> usuarios = new ArrayList<>();
     /** Lista de partidos registrados en el sistema (txt) */
-    private ArrayList<Partido> partidos;
+    private ArrayList<Partido> partidos = new ArrayList<>();
     /** Lista de Kits registrados en el sistema (txt) */
-    private ArrayList<Kit> kits;
+    private ArrayList<Kit> kits = new ArrayList<>();
     /** Lista de Compras Totales realizadas */
-    private ArrayList<Compra> compras;
+    private ArrayList<Compra> compras = new ArrayList<>();
 
     // ================================
     // Getters y Setters
@@ -66,6 +66,10 @@ public class Sistema {
     // ================================
     // Implementar clase ManejoArchivos para leer los.txt
     // ======================================
+    /**
+     * Carga los usuarios registrados desde los archivos de texto
+     * y crea los objetos correspondientes según su rol.
+     */
     public void cargarUsuarios() {
         ArrayList<String> list_usuarios = ManejoArchivos.LeeFichero("usuarios.txt");
         ArrayList<String> list_aficionados = ManejoArchivos.LeeFichero("aficionados.txt");
@@ -82,7 +86,7 @@ public class Sistema {
             String correo = dato_usuario[6];
             String rol = dato_usuario[7];
 
-            // Crear usuario Aficionado
+            //Crea el objeto Aficionado utilizando la información de ambos archivos.
             if (rol.equals("A")) {
                 for (String linea : list_aficionados) {
                     String[] datos_aficionados = linea.split("\\|");
@@ -104,7 +108,7 @@ public class Sistema {
                         break;
                     }
                 }
-                // crear usuario Organizador
+            //Crea el objeto Organizador utilizando la información de ambos archivos.
             } else if (rol.equals("O")) {
                 for (String linea : list_organizadores) {
                     String[] datos_organizador = linea.split("\\|");
@@ -132,6 +136,12 @@ public class Sistema {
 
     }
 
+    /**
+     * Carga la información de los partidos desde el archivo de texto
+     * y crea los objetos Partido correspondientes.
+     *
+     * @throws ParseException si ocurre un error al convertir la fecha.
+     */
     public void cargarPartidos() throws ParseException {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<String> list_partidos = ManejoArchivos.LeeFichero("partidos.txt");
@@ -170,8 +180,12 @@ public class Sistema {
 
     }
 
+    /**
+     * Carga los kits disponibles desde el archivo de texto y
+     * relaciona cada kit con los partidos que contiene.
+     */
     public void cargarKits() {
-        ArrayList<String> list_kits = new ArrayList<>();
+        ArrayList<String> list_kits = ManejoArchivos.LeeFichero("kits.txt");
         // Obtencion Datos Kits
         for (String datos : list_kits) {
             String[] datos_kits = datos.split("\\|");

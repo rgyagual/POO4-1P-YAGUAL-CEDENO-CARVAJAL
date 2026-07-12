@@ -1,14 +1,43 @@
 import java.util.ArrayList;
 
+/**
+ * Representa un kit de entradas disponible para la venta.
+ * Un kit agrupa varios partidos y cuenta con un precio y una
+ * cantidad limitada de unidades disponibles.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class Kit {
 
+    // ===========================
+    // ATRIBUTOS
+    // ===========================
+    /** Código único que identifica al kit */
     private String codigoKit;
+    /** Nombre del Kit */
     private String nombreKit;
+    /** Descripción del contenido del Kit */
     private String descripcion;
+    /** Precio de venta del Kit */
     private double precioKit;
+    /** Cantidad de Kits Disponibles */
     private int cantidadDisponible;
+    /** lista de partidos que incluye el Kit */
     private ArrayList<Partido> partidosIncluidos;
 
+    // ======================
+    // CONSTRUCTOR
+    // ======================
+    /**
+     * Se genera un Kit con la información necesario
+     * 
+     * @param codigoKit          Código único del Kit
+     * @param nombreKit          Nomre del Kit
+     * @param descripcion        Descripcion del kit
+     * @param precioKit          Precio del kit
+     * @param cantidadDisponible Cantidad de kits disponibles para la venta
+     * @param partidosIncluidos  Lista de partidos incluidos en el Kit
+     */
     public Kit(String codigoKit, String nombreKit,
             String descripcion, double precioKit,
             int cantidadDisponible, ArrayList<Partido> partidosIncluidos) {
@@ -21,6 +50,9 @@ public class Kit {
         this.partidosIncluidos = partidosIncluidos;
     }
 
+    // =========================
+    // Getter y Setters
+    // =========================
     public String getCodigoKit() {
         return codigoKit;
     }
@@ -69,6 +101,12 @@ public class Kit {
         this.partidosIncluidos = partidosIncluidos;
     }
 
+    // =========================
+    /**
+     * Devuelve una representación en texto con la información del Kit
+     * 
+     * @return Cadena de texto con la informacion del kit
+     */
     @Override
     public String toString() {
         String partidos = "";
