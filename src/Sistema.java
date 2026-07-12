@@ -276,6 +276,7 @@ public class Sistema {
                             case 3:
                                 break;
                             case 4:
+                                af.consultarEntradas(compras);
                                 break;
                             case 5:
                                 break;
@@ -309,7 +310,7 @@ public class Sistema {
                         sc.nextLine();
                         switch (opcionElegida) {
                             case 1:
-
+                                og.consultarEntradas(compras);
                                 break;
                             case 2:
                                 break;
