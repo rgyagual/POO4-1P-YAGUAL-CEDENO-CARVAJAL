@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Representa la clase abstracta base para todos los usuarios del sistema.
  * Contiene los atributos y métodos comunes que comparten los aficionados
@@ -123,7 +124,7 @@ public abstract class Usuario {
      * Este método debe ser implementado por las subclases de Usuario, cada una con
      * su implementación (Sobreescritura)
      */
-    public abstract void consultarEntradas();
+    public abstract void consultarEntradas(ArrayList<Compra> compras);
 
     /**
      * Devuelve una representación en texto con la información del usuario

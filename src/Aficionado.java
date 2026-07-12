@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Aficionado extends Usuario {
     private String celular;
     private String PaisFavorito;
-    private ArrayList<Compra> historialCompras;
 
     public Aficionado(String codigoUnico, String cedula,
             String nombres, String apellidos,
@@ -15,8 +14,7 @@ public class Aficionado extends Usuario {
                 correo);
 
         this.celular = celular;
-        PaisFavorito = paisFavorito;
-        historialCompras = new ArrayList<>();
+        this.PaisFavorito = paisFavorito;
     }
 
     public String getCelular() {
@@ -36,5 +34,5 @@ public class Aficionado extends Usuario {
     }
 
     @Override
-    public void consultarEntradas(){}
+    public void consultarEntradas(ArrayList<Compra> compras){}
 }

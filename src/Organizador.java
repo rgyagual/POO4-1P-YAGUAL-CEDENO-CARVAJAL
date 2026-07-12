@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Organizador extends Usuario {
     private String empresa;
     private String cargo;
@@ -31,5 +33,5 @@ public class Organizador extends Usuario {
     }
  
     @Override
-    public void consultarEntradas(){}
+    public void consultarEntradas(ArrayList<Compra> compras){}
 }
