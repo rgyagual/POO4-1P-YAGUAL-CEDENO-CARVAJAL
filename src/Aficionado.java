@@ -42,4 +42,36 @@ public class Aficionado extends Usuario {
             }
         }
     }
+
+    public Compra comprar(Partido p, Zona zona, int cantidad, 
+            String numeroTarjeta){
+        int entradasDisponibles=0;
+        double precioEntrada=0;
+        switch(zona){
+            case GENERAL:
+                entradasDisponibles=p.getEntradaGeneral();
+                precioEntrada=p.getPrecioGeneral();
+                break;
+            case PREFERENCIAL:
+                entradasDisponibles=p.getEntradaPreferencial();
+                precioEntrada=p.getPrecioPreferencial();
+                break;
+            case VIP:
+                entradasDisponibles=p.getEntradaVip();
+                precioEntrada=p.getPrecioVip();
+                break;
+        }
+        Compra compraNueva=null;
+        if(cantidad>entradasDisponibles || cantidad<=0){
+            System.out.println("No hay entradas disponibles para esa zona");        
+        }else{
+            double totalPagar=cantidad*precioEntrada;
+            System.out.println("Total a pagar: "+totalPagar);
+            System.out.println("Pago exitoso");
+            compraNueva=new Compra("Entrada", p.getCodigoPartido(), 
+                new Date(), cantidad, totalPagar, this.codigoUnico);
+        }
+        return compraNueva;
+        
+    }
 }
