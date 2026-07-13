@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Aficionado extends Usuario {
     private String celular;
@@ -77,8 +78,21 @@ public class Aficionado extends Usuario {
             System.out.println("Pago exitoso");
             compraNueva=new Compra("Entrada", p.getCodigoPartido(), 
                 new Date(), cantidad, totalPagar, this.codigoUnico);
+            compraNueva.agregarCompraTxt();
+            
+            int entradasActualizadas=entradasDisponibles-cantidad;
+            switch(zona){
+                case GENERAL:
+                    p.setEntradaGeneral(entradasActualizadas);
+                    break;
+                case PREFERENCIAL:
+                    p.setEntradaPreferencial(entradasActualizadas);
+                    break;
+                case VIP:
+                    p.setEntradaVip(entradasActualizadas);
+                    break;
+            }
         }
-        return compraNueva;
-        
+        return compraNueva;        
     }
 }
