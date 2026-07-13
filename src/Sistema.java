@@ -282,11 +282,26 @@ public class Sistema {
     /**
      * Se busca notificar cada que se realiza una compra de entradas a un partido
      * 
-     * @param af              Aficionado comprador
-     * @param compraRealizada Compra realizada por el aficionado
+     * @param af Aficionado comprador
+     * @param c  Compra realizada por el aficionado
      */
-    public void notificar(Aficionado af, Compra compraRealizada) {
-        String mensaje = "";
+    public void notificar(Aficionado af, Compra c) {
+        String partidoCompra = "";
+        for (Partido p : partidos) {
+            if (p.getCodigoPartido().equals(c.getCodigoReferencia())) {
+                partidoCompra = p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
+                break;
+            }
+            break;
+        }
+        String mensaje = "Estimado/a" + af.nombres + " " + af.apellidos +
+                "\nSu compra ha sido registrada exitosamente con el código" + c.getCodigoCompra() + " el día "
+                + c.getFechaCompra() +
+                ".\nPartido: " + partidoCompra + "\nCódigo del Partido: " + c.getCodigoReferencia() +
+                "\nZona: " + c.getZonaCompra() +
+                "\nCantidad: " + c.getCantidad() +
+                "\nValor Pagado: $" + c.getValorPagado() +
+                "\nGracias por adquirir sus entradas para el Mundial. Recuerde conservar el código de compra para futuras\nconsultas.";
         enviarCorreo(af.correo, "Compra de entradas realizada", mensaje);
     }
 
@@ -297,8 +312,24 @@ public class Sistema {
      * @param af         Aficionado comprador
      * @param kitCoompra Kit comprado por el aficionado
      */
-    public void notificar(Aficionado af, Kit kitCoompra) {
-        String mensaje = "";
+    public void notificar(Aficionado af, Kit kitCompra, Compra c) {
+        String partidoCompra = "";
+        String codigoPartido = "";
+        for (Kit k : kits) {
+            if (kitCompra.getCodigoKit().equals(k.getCodigoKit())) {
+                for (Partido p : k.getPartidosIncluidos()) {
+                    partidoCompra = p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
+                    codigoPartido = p.getCodigoPartido();
+                }
+            }
+        }
+        String mensaje = "Estimado/a "+af.nombres+" "+af.apellidos+
+        "\n\nSu compra ha sido registrada exitosamente con el código "+c.getCodigoCompra()+" el día "+c.getFechaCompra()+
+        ".\n\nPartido: "+partidoCompra+
+        "\nCódigo del partido: "+codigoPartido+
+        "\nZona: "+ c.getZonaCompra()+
+        "\nCantidad: "+c.getCantidad()+
+        "\nValor Pagado "+c.getValorPagado();
         enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
     };
 
@@ -333,12 +364,13 @@ public class Sistema {
         System.out.print("Seleccione una opción: ");
     }
 
-    /**Mensajes al mostrar cuando suceda un error de Autenticación */
+    /** Mensajes al mostrar cuando suceda un error de Autenticación */
     public void errorAutenticacion() {
         System.out.println("Verificación fallida.");
         System.out.println("Por motivos de seguridad se cerrará la sesión");
         System.out.println("\nSaliendo del sistema...");
     }
+
     /** Método que muestra todos los partidos disponiles y su información */
     public void partidosTotales() {
         System.out.println("Partidos encontrados: ");
