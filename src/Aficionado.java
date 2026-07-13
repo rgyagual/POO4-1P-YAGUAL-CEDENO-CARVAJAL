@@ -98,4 +98,18 @@ public class Aficionado extends Usuario {
         }
         return compraNueva;
     }
+
+   public Compra comprar(Kit k, String numeroTarjeta){
+        Compra compraNueva=null;
+        if(k.getCantidadDisponible()<=0){
+            System.out.println("No hay kits disponibles");
+        }else{
+            double totalPagar=k.getPrecioKit();
+            System.out.println("Total a pagar: "+totalPagar);
+            compraNueva=new Compra("Kit", k.getCodigoKit(), new Date(),
+                    1, totalPagar, codigoUnico, null);
+            compraNueva.agregarCompraTxt();
+        }
+        return compraNueva;
+    } 
 }

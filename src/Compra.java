@@ -127,11 +127,6 @@ public class Compra {
 
     public void agregarCompraTxt(){
         ManejoArchivos.EscribirArchivo("compras.txt", 
-<<<<<<< HEAD
         codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" +zonaCompra+"|"+ cantidad +"|" + valorPagado +"|" + codigoAficionado);
-}
-=======
-        codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" + cantidad +"|" + valorPagado +"|" + codigoAficionado);
     }
->>>>>>> c239fd1bb92f8cb356492ddcad4d4f68673c0e10
 }
