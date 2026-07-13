@@ -25,9 +25,11 @@ public class Compra {
     private double valorPagado;
     /** Codigo del Aficionado Comprador */
     private String codigoAficionado;
+    /**Zona elegida de la compra*/
+    private Zona zonaCompra;
     /** Contador utilizado para generar código de compra */
     private static int contador = 0;
-
+    
     // ===================================
     // CONSTRUCTOR
     // ===================================
@@ -45,7 +47,7 @@ public class Compra {
     public Compra(String tipo,
             String codigoReferencia, Date fechaCompra,
             int cantidad, double valorPagado,
-            String codigoAficionado) {
+            String codigoAficionado, Zona zona) {
 
         this.tipo = tipo;
         this.codigoReferencia = codigoReferencia;
@@ -53,6 +55,7 @@ public class Compra {
         this.cantidad = cantidad;
         this.valorPagado = valorPagado;
         this.codigoAficionado = codigoAficionado;
+        this.zonaCompra = zona;
         contador++;
         generarCodigoCompra();
     }
@@ -92,24 +95,8 @@ public class Compra {
         return contador;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setCodigoReferencia(String codigoReferencia) {
-        this.codigoReferencia = codigoReferencia;
-    }
-
-    public void setFechaCompra(Date fechaCompra) {
-        this.fechaCompra = fechaCompra;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void setCodigoAficionado(String codigoAficionado) {
-        this.codigoAficionado = codigoAficionado;
+    public Zona getZonaCompra() {
+        return zonaCompra;
     }
     // ================================
 
@@ -132,6 +119,7 @@ public class Compra {
                 "\nTipo: " + tipo +
                 "\nCodigo de Referencia: " + codigoReferencia +
                 "\nFecha: " + fechaCompra +
+                "\nZona: " + zonaCompra+
                 "\nCantidad: " + cantidad +
                 "\nValor Pagado: " + valorPagado +
                 "\nCodigo de Aficionado: " + codigoAficionado;
@@ -139,5 +127,6 @@ public class Compra {
 
     public void agregarCompraTxt(){
         ManejoArchivos.EscribirArchivo("compras.txt", 
-        codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" + cantidad +"|" + valorPagado +"|" + codigoAficionado);
+        codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" +zonaCompra+"|"+ cantidad +"|" + valorPagado +"|" + codigoAficionado);
+}
 }
