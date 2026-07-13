@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.print.attribute.standard.ColorSupported;
+
 /**Librerias necesarias para enviar un email */
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -448,7 +450,22 @@ public class Sistema {
         notificar(af, c);
         sc.close();
     }
-
+/** Metodo comprarKit */
+    public void comprarKit(Aficionado af){
+        //Mostrar Kits disponibles
+        Scanner sc = new Scanner(System.in);
+        for(int i = 0, i<kits.size(),i++){
+            System.out.println((i + 1) + ". " + k.get(i))
+        }
+        System.out.print("Ingresa el número de kit a comprar: ")
+        int kitElegido = sc.nextInt();
+        sc.nextLine();
+        Kit kitCompra = kits.get(kitElegido-1)
+        System.out.println("Ingrese su número de Tarjeta: ")
+        String numTarjeta = sc.nextLine();
+        Compra compraKit = af.comprar(kitCompra, numTarjeta);
+        notificar(af, kitCompra, compraKit);
+    }
     /**
      * Permite a un usuario iniciar sesión en el sistema verificando
      * sus credenciales y mostrando el menú correspondiente según su rol.
