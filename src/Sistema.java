@@ -323,13 +323,14 @@ public class Sistema {
                 }
             }
         }
-        String mensaje = "Estimado/a "+af.nombres+" "+af.apellidos+
-        "\n\nSu compra ha sido registrada exitosamente con el código "+c.getCodigoCompra()+" el día "+c.getFechaCompra()+
-        ".\n\nPartido: "+partidoCompra+
-        "\nCódigo del partido: "+codigoPartido+
-        "\nZona: "+ c.getZonaCompra()+
-        "\nCantidad: "+c.getCantidad()+
-        "\nValor Pagado "+c.getValorPagado();
+        String mensaje = "Estimado/a " + af.nombres + " " + af.apellidos +
+                "\n\nSu compra ha sido registrada exitosamente con el código " + c.getCodigoCompra() + " el día "
+                + c.getFechaCompra() +
+                ".\n\nPartido: " + partidoCompra +
+                "\nCódigo del partido: " + codigoPartido +
+                "\nZona: " + c.getZonaCompra() +
+                "\nCantidad: " + c.getCantidad() +
+                "\nValor Pagado " + c.getValorPagado();
         enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
     };
 
@@ -339,9 +340,30 @@ public class Sistema {
      * @param o Organizador que genera el reporte
      */
     public void notificar(Organizador o) {
-        String mensaje = "";
+        int totalEntradas = 0;
+        int totalKits = 0;
+        int totalCompras = compras.size();
+        double totalRecaudado = 0;
+
+        for (Compra c : compras) {
+            totalRecaudado += c.getValorPagado();
+
+            if (c.getTipo().equals("ENTRADA")) {
+                totalEntradas += c.getCantidad();
+            } else if (c.getTipo().equals("KIT")) {
+                totalKits += c.getCantidad();
+            }
+        }
+
+        String mensaje = "Estimado/a " + o.nombres + " " + o.apellidos +
+                ",\nSe ha generado el reporte de compras del sistema." +
+                "\nFecha de generación del reporte: " + new Date() +
+                "\nTotal de compras registradas: " + totalCompras +
+                "\nTotal de compras de entradas individuales: " + totalEntradas +
+                "\nTotal de compras Kits: " + totalKits +
+                "\nMonto total recaudado: $" + totalRecaudado;
         enviarCorreo(o.correo, "Reporte de compras registradas", mensaje);
-    };
+    }
 
     /** Menu a mostrar para el Aficionado */
     public void menuAficionado() {
@@ -372,11 +394,59 @@ public class Sistema {
     }
 
     /** Método que muestra todos los partidos disponiles y su información */
-    public void partidosTotales() {
+    public void consultarPartidos() {
         System.out.println("Partidos encontrados: ");
         for (int i = 0; i < partidos.size(); i++) {
             System.out.println((i + 1) + ". " + partidos.get(i));
         }
+    }
+
+    /**
+     * Implementa la compra de entradas, solicitando los datos neesarios del
+     * ususario y generando la notificación por correo
+     * 
+     * @param af Usuario aficionado que realizará la compra
+     */
+    public void comprarEntrada(Aficionado af) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese código del partido: ");
+        String codigoPartido = sc.nextLine();
+        Partido partidoCompra = null;
+        for (Partido p : partidos) {
+            if (p.getCodigoPartido().equals(codigoPartido)) {
+                partidoCompra = p;
+                break;
+            }
+        }
+        System.out.println("Elija la zona\na. GENERAL\nb. PREFERENCIAL\nc.VIP: ");
+        System.out.print("Opcion: ");
+        String zonaElegida = sc.nextLine();
+        sc.nextLine();
+        Zona zona;
+        switch (zonaElegida) {
+            case "a":
+                zona = Zona.GENERAL;
+                break;
+            case "b":
+                zona = Zona.PREFERENCIAL;
+            case "c":
+                zona = Zona.VIP;
+            default:
+                System.out.println("Opcion inválida.");
+                sc.close();
+                return;
+        }
+        System.out.println("Ingresar cantidad de entradas: ");
+        int cantidadEntradas = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingresar número de tarjeta: ");
+        String numTarjeta = sc.nextLine();
+        Compra c = af.comprar(partidoCompra,
+                zona,
+                cantidadEntradas,
+                numTarjeta);
+        notificar(af, c);
+        sc.close();
     }
 
     /**
@@ -415,9 +485,10 @@ public class Sistema {
                         sc.nextLine();
                         switch (opcionElegida) {
                             case 1:
-                                partidosTotales();
+                                consultarPartidos();
                                 break;
                             case 2:
+                                comprarEntrada(af);
                                 break;
                             case 3:
                                 break;
