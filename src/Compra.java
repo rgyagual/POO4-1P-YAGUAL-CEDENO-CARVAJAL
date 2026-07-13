@@ -128,7 +128,16 @@ public class Compra {
      */
     @Override
     public String toString() {
-        return codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" + cantidad +"|" + valorPagado +"|" + codigoAficionado;
+        return "Código: " + codigoCompra +
+                "\nTipo: " + tipo +
+                "\nCodigo de Referencia: " + codigoReferencia +
+                "\nFecha: " + fechaCompra +
+                "\nCantidad: " + cantidad +
+                "\nValor Pagado: " + valorPagado +
+                "\nCodigo de Aficionado: " + codigoAficionado;
     }
 
+    public void agregarCompraTxt(){
+        ManejoArchivos.EscribirArchivo("compras.txt", 
+        codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" + cantidad +"|" + valorPagado +"|" + codigoAficionado);
 }
