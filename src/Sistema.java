@@ -450,7 +450,7 @@ public class Sistema {
                         sc.nextLine();
                         switch (opcionElegida) {
                             case 1:
-
+                                og.consultarEntradas(compras);
                                 break;
                             case 2:
                                 break;

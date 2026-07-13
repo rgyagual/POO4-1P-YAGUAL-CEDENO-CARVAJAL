@@ -39,4 +39,11 @@ public class Organizador extends Usuario {
             System.out.println(c.toString());
         }
     }
+
+    public void establecerPrecios(Partido p, double precioGeneral, 
+            double precioPreferencial,double precioVip){
+        p.setPrecioGeneral(precioGeneral);
+        p.setPrecioPreferencial(precioPreferencial);
+        p.setPrecioVip(precioVip);
+    }
 }
