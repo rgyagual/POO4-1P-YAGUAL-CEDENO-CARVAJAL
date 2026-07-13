@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Organizador extends Usuario {
     private String empresa;
@@ -31,11 +32,11 @@ public class Organizador extends Usuario {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
- 
+
     @Override
-    public void consultarEntradas(ArrayList<Compra> compras){
+    public void consultarEntradas(ArrayList<Compra> compras) {
         System.out.println("COMPRAS REGISTRADAS");
-        for(Compra c: compras){
+        for (Compra c : compras) {
             System.out.println(c.toString());
         }
     }
@@ -45,5 +46,32 @@ public class Organizador extends Usuario {
         p.setPrecioGeneral(precioGeneral);
         p.setPrecioPreferencial(precioPreferencial);
         p.setPrecioVip(precioVip);
+
+    public void generarReporte(List<Compra> compras) {
+        int totalEntradas = 0;
+        int totalKits = 0;
+        int totalCompras = compras.size();
+        double total = 0;
+
+        for (Compra c : compras) {
+            total += c.getValorPagado();
+
+            if (c.getTipo().equals("ENTRADA")) {
+                totalEntradas += c.getCantidad();
+            } else if (c.getTipo().equals("KIT")) {
+                totalKits += c.getCantidad();
+            }
+
+        }
+        System.out.println("-----GENERAR REPORTE DE VENTAS-----");
+        System.out.println("Resumen de ventas regisradas: ");
+        System.out.println("Total de compras: " + totalCompras);
+        System.out.println("Compras por tipo:");
+        System.out.println("Total de Entradas Vendidas: " + totalEntradas);
+        System.out.println("Total de Entradas Kits: " + totalKits);
+        System.out.println("Total de dinero generado: ");
+        System.out.printf("$%,.2f\n", total);
+
+
     }
 }
