@@ -4,6 +4,17 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**Librerias necesarias para enviar un email */
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import java.util.Properties;
+
 /**
  * Administra la información principal del sistema de venta y gestión
  * de entradas para el Mundial.
@@ -86,7 +97,7 @@ public class Sistema {
             String correo = dato_usuario[6];
             String rol = dato_usuario[7];
 
-            //Crea el objeto Aficionado utilizando la información de ambos archivos.
+            // Crea el objeto Aficionado utilizando la información de ambos archivos.
             if (rol.equals("A")) {
                 for (String linea : list_aficionados) {
                     String[] datos_aficionados = linea.split("\\|");
@@ -108,7 +119,7 @@ public class Sistema {
                         break;
                     }
                 }
-            //Crea el objeto Organizador utilizando la información de ambos archivos.
+                // Crea el objeto Organizador utilizando la información de ambos archivos.
             } else if (rol.equals("O")) {
                 for (String linea : list_organizadores) {
                     String[] datos_organizador = linea.split("\\|");
@@ -224,6 +235,119 @@ public class Sistema {
     }
 
     /**
+     * Método implementado para enviar un correo real a través de Gmail
+     * 
+     * @param destinatario  Quien recibe el correo
+     * @param asunto        Asunto del correo
+     * @param mensajeCorreo Mensaje a enviar
+     */
+    private void enviarCorreo(String destinatario,
+            String asunto,
+            String mensajeCorreo) {
+
+        /** Se introduce el correo del remitente */
+        final String remitente = "ventasentradasmundial@gmail.com";
+        final String clave = "nhmm ufew bqac fzwe";
+
+        /** Se conecta con el servidor de Gmail */
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        /** Se inicia sesión en Gmail usando la contraseña de app */
+        Session session = Session.getInstance(props,
+                new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(remitente, clave);
+                    }
+                });
+        /** Se introduce la creación de un mensaje */
+        try {
+            Message mensaje = new MimeMessage(session);
+            mensaje.setFrom(new InternetAddress(remitente));
+            mensaje.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(destinatario));
+            mensaje.setSubject(asunto);
+            mensaje.setText(mensajeCorreo);
+            Transport.send(mensaje);
+            System.out.println("Correo enviado.");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Se busca notificar cada que se realiza una compra de entradas a un partido
+     * 
+     * @param af              Aficionado comprador
+     * @param compraRealizada Compra realizada por el aficionado
+     */
+    public void notificar(Aficionado af, Compra compraRealizada) {
+        String mensaje = "";
+        enviarCorreo(af.correo, "Compra de entradas realizada", mensaje);
+    }
+
+    /**
+     * Se busca notificar cada que se realiza una compra de un kit de entradas a un
+     * partido
+     * 
+     * @param af         Aficionado comprador
+     * @param kitCoompra Kit comprado por el aficionado
+     */
+    public void notificar(Aficionado af, Kit kitCoompra) {
+        String mensaje = "";
+        enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
+    };
+
+    /**
+     * Se busca notificar cuando se genere un reporte de ventas totales
+     * 
+     * @param o Organizador que genera el reporte
+     */
+    public void notificar(Organizador o) {
+        String mensaje = "";
+        enviarCorreo(o.correo, "Reporte de compras registradas", mensaje);
+    };
+
+    /** Menu a mostrar para el Aficionado */
+    public void menuAficionado() {
+        System.out.println("Identidad confirmada.");
+        System.out.println("Menú de Aficionado: ");
+        System.out.println("1. Consultar partidos");
+        System.out.println("2. Comprar entrada");
+        System.out.println("3. Comprar Kit de entradas");
+        System.out.println("4. Consultar entradas");
+        System.out.println("5. Salir");
+        System.out.println("Seleccione una opción: ");
+    }
+
+    /** Menu a mostrar para el Organizador */
+    public void menuOrganizador() {
+        System.out.println("Menú de Organizador:");
+        System.out.println("1. Consultar entradas");
+        System.out.println("2. Generar Reporte");
+        System.out.println("3. Salir");
+        System.out.print("Seleccione una opción: ");
+    }
+
+    /**Mensajes al mostrar cuando suceda un error de Autenticación */
+    public void errorAutenticacion() {
+        System.out.println("Verificación fallida.");
+        System.out.println("Por motivos de seguridad se cerrará la sesión");
+        System.out.println("\nSaliendo del sistema...");
+    }
+    /** Método que muestra todos los partidos disponiles y su información */
+    public void partidosTotales() {
+        System.out.println("Partidos encontrados: ");
+        for (int i = 0; i < partidos.size(); i++) {
+            System.out.println((i + 1) + ". " + partidos.get(i));
+        }
+    }
+
+    /**
      * Permite a un usuario iniciar sesión en el sistema verificando
      * sus credenciales y mostrando el menú correspondiente según su rol.
      * Si la autenticación falla o la verificación de identidad no es
@@ -254,29 +378,19 @@ public class Sistema {
                     String validarNumero = sc.nextLine();
                     // Muestra menú de opciones de Aficionado
                     if (validarNumero.equals("S")) {
-                        System.out.println("Identidad confirmada.");
-                        System.out.println("Menú de Aficionado: ");
-                        System.out.println("1. Consultar partidos");
-                        System.out.println("2. Comprar entrada");
-                        System.out.println("3. Comprar Kit de entradas");
-                        System.out.println("4. Consultar entradas");
-                        System.out.println("5. Salir");
-                        System.out.println("Seleccione una opción: ");
+                        menuAficionado();
                         int opcionElegida = sc.nextInt();
                         sc.nextLine();
                         switch (opcionElegida) {
                             case 1:
-                                System.out.println("Partidos encontrados: ");
-                                for (int i = 0; i < partidos.size(); i++) {
-                                    System.out.println((i + 1) + ". " + partidos.get(i));
-                                }
+                                partidosTotales();
                                 break;
                             case 2:
                                 break;
                             case 3:
                                 break;
                             case 4:
-                                af.consultarEntradas(compras);
+                                af.consultarEntradas(af.getHistorialCompras());
                                 break;
                             case 5:
                                 break;
@@ -286,9 +400,7 @@ public class Sistema {
                         }
 
                     } else {
-                        System.out.println("Verificación fallida.");
-                        System.out.println("Por motivos de seguridad se cerrará la sesión");
-                        System.out.println("\nSaliendo del sistema...");
+                        errorAutenticacion();
                         break;
                     }
                     // Si el usuario autenticado es un Organizador
@@ -301,11 +413,7 @@ public class Sistema {
                     String validarEmpresa = sc.nextLine();
                     // Muestra menú de opciones de Organizador
                     if (validarEmpresa.equals("S")) {
-                        System.out.println("Menú de Organizador:");
-                        System.out.println("1. Consultar entradas");
-                        System.out.println("2. Generar Reporte");
-                        System.out.println("3. Salir");
-                        System.out.print("Seleccione una opción: ");
+                        menuOrganizador();
                         int opcionElegida = sc.nextInt();
                         sc.nextLine();
                         switch (opcionElegida) {
@@ -322,9 +430,7 @@ public class Sistema {
                                 break;
                         }
                     } else {
-                        System.out.println("Verificación fallida.");
-                        System.out.println("Por motivos de seguridad se cerrará la sesión");
-                        System.out.println("\nSaliendo del sistema...");
+                        errorAutenticacion();
                         break;
 
                     }

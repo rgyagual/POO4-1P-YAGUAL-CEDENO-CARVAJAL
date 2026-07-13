@@ -122,7 +122,7 @@ public abstract class Usuario {
     /**
      * Método abstracto que permite consultar las entradas al usuario.
      * Este método debe ser implementado por las subclases de Usuario, cada una con
-     * su implementación (Sobreescritura)
+     * su implementación (Sobreescritura)   
      */
     public abstract void consultarEntradas(ArrayList<Compra> compras);
 

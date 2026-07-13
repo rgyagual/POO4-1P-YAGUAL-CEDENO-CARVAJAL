@@ -137,4 +137,8 @@ public class Compra {
                 "\nCodigo de Aficionado: " + codigoAficionado;
     }
 
+    public void agregarCompraTxt(){
+        ManejoArchivos.EscribirArchivo("compras.txt", 
+        codigoCompra +"|" + tipo +"|" + codigoReferencia +"|" + fechaCompra +"|" + cantidad +"|" + valorPagado +"|" + codigoAficionado);
+    }
 }
