@@ -1,7 +1,7 @@
 import java.util.Date;
 
 /**
- * Representa 
+ * Representa
  * Partido
  */
 public class Partido {
@@ -21,9 +21,9 @@ public class Partido {
     /** Nombre de la ciudad. */
     private String ciudad;
     /** Fase del partido. */
-    private String faseEnum;
+    private String faseStr;
     /** Fase del partido en Enum. */
-    private FasesMundial fase;
+    private FasesMundial faseEnum;
     /** Capacidad del estadio. */
     private int capacidad;
     /** Entradas disponibles en general. */
@@ -39,22 +39,22 @@ public class Partido {
     /**
      * Crea un nuevo partido.
      * 
-     * @param codigoPartido        Código del partido.
-     * @param equipoLocal          Nombre del equipo local.
-     * @param equipoVisitante      Nombre del equipo visitante.
-     * @param fechaPartido         Fecha del partido.
-     * @param estadio              Nombre del estadio.
-     * @param ciudad               Nombre de la ciudad.
-     * @param faseEnum             Fase del partido
-     * @param capacidad            Capacidad del estadio.
-     * @param entradaGeneral       Entradas disponibles en general.
-     * @param entradaPreferencial  Entradas disponibles en preferencial.
-     * @param entradaVip           Entradas disponibles en Vip.
+     * @param codigoPartido       Código del partido.
+     * @param equipoLocal         Nombre del equipo local.
+     * @param equipoVisitante     Nombre del equipo visitante.
+     * @param fechaPartido        Fecha del partido.
+     * @param estadio             Nombre del estadio.
+     * @param ciudad              Nombre de la ciudad.
+     * @param faseStr             Fase del partido
+     * @param capacidad           Capacidad del estadio.
+     * @param entradaGeneral      Entradas disponibles en general.
+     * @param entradaPreferencial Entradas disponibles en preferencial.
+     * @param entradaVip          Entradas disponibles en Vip.
      */
     public Partido(String codigoPartido, String equipoLocal,
             String equipoVisitante, Date fechaPartido,
-            String estadio, String ciudad, 
-            String faseEnum, int capacidad,
+            String estadio, String ciudad,
+            String faseStr, int capacidad,
             int entradaGeneral, int entradaPreferencial,
             int entradaVip) {
 
@@ -68,27 +68,9 @@ public class Partido {
         this.entradaGeneral = entradaGeneral;
         this.entradaPreferencial = entradaPreferencial;
         this.entradaVip = entradaVip;
-        this.faseEnum = faseEnum;
-        switch (faseEnum){
-            case "Fase de grupos":
-                fase=FasesMundial.GRUPOS;                
-                break;
-            case "Octavos de final":
-                fase=FasesMundial.OCTAVOS;
-                break;
-            case "Cuartos de final":
-                fase=FasesMundial.CUARTOS;
-                break;
-            case "Semifinal":
-                fase=FasesMundial.SEMIFINAL;
-                break;
-            case "Final":
-                fase=FasesMundial.FINAL;
-                break;        
-            default:
-                fase=null;
-                break;
-        }
+        this.faseStr = faseStr;
+        definirFaseEnum(faseStr);
+
     }
 
     // ===================================
@@ -142,40 +124,20 @@ public class Partido {
         this.ciudad = ciudad;
     }
 
-    public String getFaseEnum(){
+    public String getFaseStr() {
+        return faseStr;
+    }
+
+    public void setFaseStr(String faseStr) {
+        this.faseStr = faseStr;
+    }
+
+    public FasesMundial getFaseEnum() {
         return faseEnum;
     }
 
-    public void setFaseEnum(String faseEnum){
-        this.faseEnum=faseEnum;
-        switch (faseEnum){
-            case "Fase de grupos":
-                fase=FasesMundial.GRUPOS;                
-                break;
-            case "Octavos de final":
-                fase=FasesMundial.OCTAVOS;
-                break;
-            case "Cuartos de final":
-                fase=FasesMundial.CUARTOS;
-                break;
-            case "Semifinal":
-                fase=FasesMundial.SEMIFINAL;
-                break;
-            case "Final":
-                fase=FasesMundial.FINAL;
-                break;        
-            default:
-                fase=null;
-                break;
-        }
-    }
-
-    public FasesMundial getFase() {
-        return fase;
-    }
-
-    public void setFase(FasesMundial fase) {
-        this.fase = fase;
+    public void setFaseEnum(FasesMundial faseEnum) {
+        this.faseEnum = faseEnum;
     }
 
     public int getCapacidad() {
@@ -210,6 +172,29 @@ public class Partido {
         this.entradaVip = entradaVip;
     }
 
+    private void definirFaseEnum(String faseStr) {
+        switch (faseStr) {
+            case "Fase de grupos":
+                faseEnum = FasesMundial.GRUPOS;
+                break;
+            case "Octavos de final":
+                faseEnum = FasesMundial.OCTAVOS;
+                break;
+            case "Cuartos de final":
+                faseEnum = FasesMundial.CUARTOS;
+                break;
+            case "Semifinal":
+                faseEnum = FasesMundial.SEMIFINAL;
+                break;
+            case "Final":
+                faseEnum = FasesMundial.FINAL;
+                break;
+            default:
+                faseEnum = null;
+                break;
+        }
+    }
+
     /**
      * Devuelve una representación en texto con la información del partido.
      * 
@@ -219,19 +204,19 @@ public class Partido {
     public String toString() {
         String partido = equipoLocal + " vs " + equipoVisitante;
         String infoZonas = String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.GENERAL, entradaGeneral,
-                PrecioMundial.Precios(Zona.GENERAL, fase)) +
+                PrecioMundial.Precios(Zona.GENERAL, faseEnum)) +
                 String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.PREFERENCIAL, entradaPreferencial,
-                        PrecioMundial.Precios(Zona.PREFERENCIAL, fase))
+                        PrecioMundial.Precios(Zona.PREFERENCIAL, faseEnum))
                 +
-                String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.VIP, entradaVip, 
-                        PrecioMundial.Precios(Zona.VIP, fase));
+                String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.VIP, entradaVip,
+                        PrecioMundial.Precios(Zona.VIP, faseEnum));
 
         return "Código: " + codigoPartido +
                 "\nPartido: " + partido +
                 "\nFecha: " + fechaPartido +
                 "\nEstadio: " + estadio +
                 "\nCiudad: " + ciudad +
-                "\nFase: " + fase +
+                "\nFase: " + faseStr +
                 "\nZonas Disponibles: " + "\n" + infoZonas +
                 "\n--------------------------------------------------";
     }
