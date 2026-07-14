@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.print.attribute.standard.ColorSupported;
 
 /**Librerias necesarias para enviar un email */
 import jakarta.mail.Authenticator;
@@ -39,6 +38,8 @@ public class Sistema {
     private ArrayList<Kit> kits = new ArrayList<>();
     /** Lista de Compras Totales realizadas */
     private ArrayList<Compra> compras = new ArrayList<>();
+    /** Scanner para solicitar datos al usuario */
+    Scanner sc = new Scanner(System.in);
 
     // ================================
     // Getters y Setters
@@ -215,7 +216,7 @@ public class Sistema {
             ArrayList<Partido> partidosKits = new ArrayList<>();
 
             // Obtención de los partidos del Kit
-            for (String c : datos_kits[2].split(",")) {
+            for (String c : datos_kits[3].split(",")) {
                 for (Partido p : partidos) {
                     if (p.getCodigoPartido().equals(c)) {
                         partidosKits.add(p);
@@ -294,10 +295,9 @@ public class Sistema {
                 partidoCompra = p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
                 break;
             }
-            break;
         }
-        String mensaje = "Estimado/a" + af.nombres + " " + af.apellidos +
-                "\nSu compra ha sido registrada exitosamente con el código" + c.getCodigoCompra() + " el día "
+        String mensaje = "Estimado/a " + af.nombres + " " + af.apellidos +
+                "\nSu compra ha sido registrada exitosamente con el código " + c.getCodigoCompra() + " el día "
                 + c.getFechaCompra() +
                 ".\nPartido: " + partidoCompra + "\nCódigo del Partido: " + c.getCodigoReferencia() +
                 "\nZona: " + c.getZonaCompra() +
@@ -410,9 +410,9 @@ public class Sistema {
      * @param af Usuario aficionado que realizará la compra
      */
     public void comprarEntrada(Aficionado af) {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese código del partido: ");
         String codigoPartido = sc.nextLine();
+        //Partido del que se comprará entradas
         Partido partidoCompra = null;
         for (Partido p : partidos) {
             if (p.getCodigoPartido().equals(codigoPartido)) {
@@ -431,11 +431,12 @@ public class Sistema {
                 break;
             case "b":
                 zona = Zona.PREFERENCIAL;
+                break;
             case "c":
                 zona = Zona.VIP;
+                break;
             default:
                 System.out.println("Opcion inválida.");
-                sc.close();
                 return;
         }
         System.out.println("Ingresar cantidad de entradas: ");
@@ -448,7 +449,6 @@ public class Sistema {
                 cantidadEntradas,
                 numTarjeta);
         notificar(af, c);
-        sc.close();
     }
 
 /**
@@ -458,7 +458,6 @@ public class Sistema {
  */
     public void comprarKit(Aficionado af){
         //Mostrar Kits disponibles
-        Scanner sc = new Scanner(System.in);
         for(int i = 0;i<kits.size();i++){
             System.out.println((i + 1) + ". " + kits.get(i));
         }
@@ -481,7 +480,6 @@ public class Sistema {
     public void iniciarSesion() {
 
         // Solicitud de credenciales al usuario
-        Scanner sc = new Scanner(System.in);
         System.out.println("=====INICIO DE SESIÓN=====");
         System.out.print("Usuario: ");
         String usuario = sc.nextLine();
@@ -571,4 +569,5 @@ public class Sistema {
             System.out.println("Usuario o contraseña incorrectos.");
         }
     }
+
 }
