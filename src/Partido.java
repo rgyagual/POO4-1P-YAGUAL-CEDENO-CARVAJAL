@@ -8,7 +8,7 @@ public class Partido {
     private Date fechaPartido;
     private String estadio;
     private String ciudad;
-    private String fase;
+    private FasesMundial fase;
     private int capacidad;
     private int entradaGeneral;
     private int entradaPreferencial;
@@ -17,7 +17,7 @@ public class Partido {
     // Variables de precio añadidas bajo criterio propio.
     // Dado que la guía no define precios, se implementaron para permitir al
     // organizador establecer precios personalizados para cada partido.
-   
+
     private double precioGeneral;
     private double precioPreferencial;
     private double precioVip;
@@ -25,7 +25,7 @@ public class Partido {
     public Partido(String codigoPartido, String equipoLocal,
             String equipoVisitante, Date fechaPartido,
             String estadio, String ciudad,
-            String fase, int capacidad,
+            FasesMundial fase, int capacidad,
             int entradaGeneral, int entradaPreferencial,
             int entradaVip, double precioGeneral,
             double precioPreferencial, double precioVip) {
@@ -94,11 +94,11 @@ public class Partido {
         this.ciudad = ciudad;
     }
 
-    public String getFase() {
+    public FasesMundial getFase() {
         return fase;
     }
 
-    public void setFase(String fase) {
+    public void setFase(FasesMundial fase) {
         this.fase = fase;
     }
 
