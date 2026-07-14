@@ -151,7 +151,7 @@ public class Aficionado extends Usuario {
         if (cantidad > entradasDisponibles || cantidad <= 0) {
             System.out.println("No hay entradas disponibles para esa zona");
         } else {
-            double totalEntrada = PrecioMundial.Precios(zona, partido.getFase());
+            double totalEntrada = partido.precio(zona, partido.getFaseEnum());
             double totalPagar = cantidad * totalEntrada;
             System.out.println("Total a pagar: " + totalPagar);
             System.out.println("Pago exitoso");
@@ -164,6 +164,7 @@ public class Aficionado extends Usuario {
                     codigoUnico,
                     zona);
             compraNueva.agregarCompraTxt();
+            historialCompras.add(compraNueva);
             int entradasActualizadas = entradasDisponibles - cantidad;
             switch (zona) {
                 case GENERAL:
@@ -198,8 +199,9 @@ public class Aficionado extends Usuario {
             double totalPagar = kit.getPrecioKit();
             System.out.println("Total a pagar: " + totalPagar);
             compraNueva = new Compra("Kit", kit.getCodigoKit(), new Date(),
-                    1, totalPagar, codigoUnico, null);
+                    1, totalPagar, codigoUnico, kit.getDescripcion() );
             compraNueva.agregarCompraTxt();
+            historialCompras.add(compraNueva);
         }
         return compraNueva;
     }
