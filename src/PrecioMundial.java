@@ -1,6 +1,8 @@
-/*
-Aqui se genera los precios por entradas
-*/
+/**
+ * Genera los precios por entradas
+ * 
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class PrecioMundial {
     /*
      * Devuelve el precio de una entrada segun la zona y fase del mundial.

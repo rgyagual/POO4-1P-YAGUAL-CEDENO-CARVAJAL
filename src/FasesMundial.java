@@ -1,6 +1,8 @@
-/*
-* Representa las fases de los grupos en el mundial
-*/
+/**
+ * Representa las fases de los grupos en el mundial.
+ * 
+ * @author Yagual-Cedeño-Carvajal
+ */
 
 public enum FasesMundial {
     GRUPOS,
