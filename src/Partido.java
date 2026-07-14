@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -172,6 +173,69 @@ public class Partido {
         this.entradaVip = entradaVip;
     }
 
+    public double precio(Zona zona, FasesMundial fase) {
+        System.out.println("Fase leída: " + fase);
+        switch (fase) {
+            case GRUPOS:
+                switch (zona) {
+                    case VIP:
+                        return 250.0;
+                    case PREFERENCIAL:
+                        return 170.0;
+                    case GENERAL:
+                        return 90.0;
+                }
+            case OCTAVOS:
+                switch (zona) {
+                    case VIP:
+                        return 350.0;
+                    case PREFERENCIAL:
+                        return 270.0;
+                    case GENERAL:
+                        return 150.0;
+                }
+            case CUARTOS:
+                switch (zona) {
+                    case VIP:
+                        return 500.0;
+                    case PREFERENCIAL:
+                        return 425.0;
+                    case GENERAL:
+                        return 300.0;
+                }
+            case SEMIFINAL:
+                switch (zona) {
+                    case VIP:
+                        return 700.0;
+                    case PREFERENCIAL:
+                        return 575.0;
+                    case GENERAL:
+                        return 450.0;
+                }
+            case TERCER_LUGAR:
+                switch (zona) {
+                    case VIP:
+                        return 600.0;
+                    case PREFERENCIAL:
+                        return 500.0;
+                    case GENERAL:
+                        return 380.0;
+                }
+            case FINAL:
+                switch (zona) {
+                    case VIP:
+                        return 900.0;
+                    case PREFERENCIAL:
+                        return 750.0;
+                    case GENERAL:
+                        return 525.0;
+
+                }
+            default:
+                return 0.0;
+        }
+    }
+
     private void definirFaseEnum(String faseStr) {
         switch (faseStr) {
             case "Fase de grupos":
@@ -185,6 +249,9 @@ public class Partido {
                 break;
             case "Semifinal":
                 faseEnum = FasesMundial.SEMIFINAL;
+                break;
+            case "Tercer lugar":
+                faseEnum =FasesMundial.TERCER_LUGAR;
                 break;
             case "Final":
                 faseEnum = FasesMundial.FINAL;
@@ -202,18 +269,19 @@ public class Partido {
      */
     @Override
     public String toString() {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd"); 
         String partido = equipoLocal + " vs " + equipoVisitante;
         String infoZonas = String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.GENERAL, entradaGeneral,
-                PrecioMundial.Precios(Zona.GENERAL, faseEnum)) +
+                precio(Zona.GENERAL, faseEnum)) +
                 String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.PREFERENCIAL, entradaPreferencial,
-                        PrecioMundial.Precios(Zona.PREFERENCIAL, faseEnum))
+                        precio(Zona.PREFERENCIAL, faseEnum))
                 +
                 String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.VIP, entradaVip,
-                        PrecioMundial.Precios(Zona.VIP, faseEnum));
+                        precio(Zona.VIP, faseEnum));
 
         return "Código: " + codigoPartido +
                 "\nPartido: " + partido +
-                "\nFecha: " + fechaPartido +
+                "\nFecha: " + formatoFecha.format(fechaPartido) +
                 "\nEstadio: " + estadio +
                 "\nCiudad: " + ciudad +
                 "\nFase: " + faseStr +
