@@ -33,7 +33,6 @@ public class Compra {
     private FasesMundial fase;
 
     private String descripcionKit;
-
     // ===================================
     // CONSTRUCTOR
     // ===================================
@@ -155,7 +154,7 @@ public class Compra {
             return "Código: " + codigoCompra +
                     "\nTipo: " + tipo +
                     "\nCodigo de Referencia: " + codigoReferencia +
-                    "\nFecha: " + fechaCompra +
+                    "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra) +
                     "\nZona: " + zonaCompra +
                     "\nCantidad: " + cantidad +
                     "\nCodigo de Aficionado: " + codigoAficionado;
@@ -163,7 +162,7 @@ public class Compra {
             return "Código: " + codigoCompra +
                     "\nTipo: " + tipo +
                     "\nCodigo de Referencia: " + codigoReferencia +
-                    "\nFecha: " + fechaCompra +
+                    "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra)+
                     "\nDescripción: " +descripcionKit+
                     "\nCantidad: " + cantidad +
                     "\nCodigo de Aficionado: " + codigoAficionado;
@@ -173,11 +172,11 @@ public class Compra {
     public void agregarCompraTxt() {
         if(zonaCompra != null){
         ManejoArchivos.EscribirArchivo("compras.txt",
-                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + fechaCompra + "|" + zonaCompra + "|"
+                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + zonaCompra + "|"
                         + cantidad + "|" + codigoAficionado);
         }else{
             ManejoArchivos.EscribirArchivo("compras.txt",
-                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + fechaCompra + "|" + descripcionKit + "|"
+                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + descripcionKit + "|"
                         + cantidad + "|" + codigoAficionado);
         }
     }

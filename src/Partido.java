@@ -269,7 +269,6 @@ public class Partido {
      */
     @Override
     public String toString() {
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd"); 
         String partido = equipoLocal + " vs " + equipoVisitante;
         String infoZonas = String.format("- %-13s | Disponibles: %7d | Precio: %.2f%n", Zona.GENERAL, entradaGeneral,
                 precio(Zona.GENERAL, faseEnum)) +
@@ -281,7 +280,7 @@ public class Partido {
 
         return "Código: " + codigoPartido +
                 "\nPartido: " + partido +
-                "\nFecha: " + formatoFecha.format(fechaPartido) +
+                "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaPartido)+
                 "\nEstadio: " + estadio +
                 "\nCiudad: " + ciudad +
                 "\nFase: " + faseStr +

@@ -37,9 +37,10 @@ public class Sistema {
     private ArrayList<Kit> kits = new ArrayList<>();
     /** Lista de Compras Totales realizadas */
     private ArrayList<Compra> compras = new ArrayList<>();
+    //
+    public static final SimpleDateFormat FORMATO_FECHA = new SimpleDateFormat("yyyy-MM-dd");
     /** Scanner para solicitar datos al usuario */
     Scanner sc = new Scanner(System.in);
-
     // ================================
     // Getters y Setters
     // =================================
@@ -155,7 +156,6 @@ public class Sistema {
      * 
      */
     public void cargarPartidos() {
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<String> list_partidos = ManejoArchivos.LeeFichero("partidos.txt");
         for (String datos : list_partidos) {
             String[] datos_partido = datos.split("\\|");
@@ -167,7 +167,7 @@ public class Sistema {
             // Se utiliza try-catch para manejar la Excepcion ParseException, debido a que
             // es obligatorio manejar la excepcion al usar DateFormat.parse()
             try {
-                fecha = formatoFecha.parse(datos_partido[3]);
+                fecha = FORMATO_FECHA.parse(datos_partido[3]);
             } catch (ParseException e) {
                 System.out.println("Error al convertir la fecha");
             }
@@ -185,7 +185,7 @@ public class Sistema {
                     fecha,
                     estadio,
                     ciudad,
-                    fase, // Convierte el texto de la fase al enum correspondiente.
+                    fase,
                     capacidad,
                     capacidadGeneral,
                     capacidadPreferencial,
@@ -299,7 +299,7 @@ public class Sistema {
         }
         String mensaje = "Estimado/a " + af.nombres + " " + af.apellidos +
                 "\nSu compra ha sido registrada exitosamente con el código " + c.getCodigoCompra() + " el día "
-                + c.getFechaCompra() +
+                + FORMATO_FECHA.format(c.getFechaCompra()) +
                 ".\nPartido: " + partidoCompra + "\nCódigo del Partido: " + c.getCodigoReferencia() +
                 "\nZona: " + c.getZonaCompra() +
                 "\nCantidad: " + c.getCantidad() +
@@ -319,7 +319,7 @@ public class Sistema {
         String partidoCompra = "";
         String codigoPartido = "";
         for (Kit k : kits) {
-            
+
             if (kitCompra.getCodigoKit().equals(k.getCodigoKit())) {
                 for (Partido p : k.getPartidosIncluidos()) {
                     partidoCompra = p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
@@ -329,10 +329,10 @@ public class Sistema {
         }
         String mensaje = "Estimado/a " + af.nombres + " " + af.apellidos +
                 "\n\nSu compra ha sido registrada exitosamente con el código " + c.getCodigoCompra() + " el día "
-                + c.getFechaCompra() +
+                + FORMATO_FECHA.format(c.getFechaCompra()) +
                 ".\n\nPartido: " + partidoCompra +
                 "\nCódigo del partido: " + codigoPartido +
-                "\nZona: " + c.getDescripcionKit() +
+                "\nDescripcion: " + kitCompra.getDescripcion() +
                 "\nCantidad: " + c.getCantidad() +
                 "\nValor Pagado " + c.getvalorPagado();
         enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
@@ -361,7 +361,7 @@ public class Sistema {
 
         String mensaje = "Estimado/a " + o.nombres + " " + o.apellidos +
                 ",\nSe ha generado el reporte de compras del sistema." +
-                "\nFecha de generación del reporte: " + new Date() +
+                "\nFecha de generación del reporte: " + FORMATO_FECHA.format(new Date()) +
                 "\nTotal de compras registradas: " + totalCompras +
                 "\nTotal de compras de entradas individuales: " + totalEntradas +
                 "\nTotal de compras Kits: " + totalKits +
@@ -535,51 +535,51 @@ public class Sistema {
                             }
                         } while (opcionElegida != 5);
 
-                    }else {
-                    errorAutenticacion();
-                    break;
+                    } else {
+                        errorAutenticacion();
+                        break;
                     }
                     return;
-                // Si el usuario autenticado es un Organizador
-            } else if (u instanceof Organizador) {
-                Organizador og = (Organizador) u;
-                System.out.println("Rol detectado: ORGANIZADOR");
-                System.out.println("Bienvenido, " + og.getNombres() + " " + og.getApellidos());
-                System.out.println("Empresa asignada: " + og.getEmpresa());
-                System.out.print("Esta empresa es correcta(S/N): ");
-                String validarEmpresa = sc.nextLine();
-                // Muestra menú de opciones de Organizador
-                if (validarEmpresa.equals("S")) {
-                    System.out.println("Menú de Organizador:");
-                    int opcionElegida;
-                    do {
-                        menuOrganizador();
-                        opcionElegida = sc.nextInt();
-                        sc.nextLine();
-                        switch (opcionElegida) {
-                            case 1:
-                                og.consultarEntradas(compras);
-                                break;
-                            case 2:
-                                generarReporte(og);
-                                break;
-                            case 3:
-                                System.out.println("Saliendo del sistema");
-                                return;
+                    // Si el usuario autenticado es un Organizador
+                } else if (u instanceof Organizador) {
+                    Organizador og = (Organizador) u;
+                    System.out.println("Rol detectado: ORGANIZADOR");
+                    System.out.println("Bienvenido, " + og.getNombres() + " " + og.getApellidos());
+                    System.out.println("Empresa asignada: " + og.getEmpresa());
+                    System.out.print("Esta empresa es correcta(S/N): ");
+                    String validarEmpresa = sc.nextLine();
+                    // Muestra menú de opciones de Organizador
+                    if (validarEmpresa.equals("S")) {
+                        System.out.println("Menú de Organizador:");
+                        int opcionElegida;
+                        do {
+                            menuOrganizador();
+                            opcionElegida = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcionElegida) {
+                                case 1:
+                                    og.consultarEntradas(compras);
+                                    break;
+                                case 2:
+                                    generarReporte(og);
+                                    break;
+                                case 3:
+                                    System.out.println("Saliendo del sistema");
+                                    return;
 
-                            default:
-                                System.out.println("Opción elegida inválida");
-                                break;
-                        }
-                    } while (opcionElegida != 3);
-                } else {
-                    errorAutenticacion();
-                }
-                return;
+                                default:
+                                    System.out.println("Opción elegida inválida");
+                                    break;
+                            }
+                        } while (opcionElegida != 3);
+                    } else {
+                        errorAutenticacion();
+                    }
+                    return;
                 }
             }
         }
-        if (!autenticado){
+        if (!autenticado) {
             System.out.println("Usuario o contraseña incorrectos.");
         }
     }
