@@ -174,7 +174,6 @@ public class Partido {
     }
 
     public double precio(Zona zona, FasesMundial fase) {
-        System.out.println("Fase leída: " + fase);
         switch (fase) {
             case GRUPOS:
                 switch (zona) {

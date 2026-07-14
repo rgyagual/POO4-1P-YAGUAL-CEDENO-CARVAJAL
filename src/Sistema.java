@@ -371,6 +371,8 @@ public class Sistema {
 
     /** Menu a mostrar para el Aficionado */
     private void menuAficionado() {
+        System.out.println("=========================");
+        System.out.println("Menú de Aficionado: ");
         System.out.println("1. Consultar partidos");
         System.out.println("2. Comprar entrada");
         System.out.println("3. Comprar Kit de entradas");
@@ -381,10 +383,13 @@ public class Sistema {
 
     /** Menu a mostrar para el Organizador */
     private void menuOrganizador() {
+        System.out.println("=========================");
+        System.out.println("Menú de Organizador:");
         System.out.println("1. Consultar entradas");
         System.out.println("2. Generar Reporte");
         System.out.println("3. Salir");
         System.out.print("Seleccione una opción: ");
+
     }
 
     /** Mensajes al mostrar cuando suceda un error de Autenticación */
@@ -419,7 +424,7 @@ public class Sistema {
                 break;
             }
         }
-        System.out.println("Elija la zona\na. GENERAL\nb. PREFERENCIAL\nc.VIP: ");
+        System.out.println("Elija la zona\na. GENERAL\nb. PREFERENCIAL\nc. VIP: ");
         System.out.print("Opcion: ");
         String zonaElegida = sc.nextLine();
         Zona zona;
@@ -457,6 +462,7 @@ public class Sistema {
      */
     private void comprarKit(Aficionado af) {
         // Mostrar Kits disponibles
+        System.out.println("======== KITS DISPONIBLES ========");
         for (int i = 0; i < kits.size(); i++) {
             System.out.println((i + 1) + ". " + kits.get(i));
         }
@@ -507,7 +513,6 @@ public class Sistema {
                     // Muestra menú de opciones de Aficionado
                     if (validarNumero.equals("S")) {
                         System.out.println("Identidad confirmada.");
-                        System.out.println("Menú de Aficionado: ");
                         int opcionElegida;
                         do {
                             menuAficionado();
@@ -527,7 +532,7 @@ public class Sistema {
                                     af.consultarEntradas(af.getHistorialCompras());
                                     break;
                                 case 5:
-                                    System.out.println("Saliendo");
+                                    System.out.println("Saliendo del sistema...");
                                     return;
                                 default:
                                     System.out.println("Opción elegida inválida");
@@ -550,7 +555,6 @@ public class Sistema {
                     String validarEmpresa = sc.nextLine();
                     // Muestra menú de opciones de Organizador
                     if (validarEmpresa.equals("S")) {
-                        System.out.println("Menú de Organizador:");
                         int opcionElegida;
                         do {
                             menuOrganizador();
@@ -564,7 +568,7 @@ public class Sistema {
                                     generarReporte(og);
                                     break;
                                 case 3:
-                                    System.out.println("Saliendo del sistema");
+                                    System.out.println("Saliendo del sistema...");
                                     return;
 
                                 default:

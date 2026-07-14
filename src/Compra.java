@@ -157,7 +157,8 @@ public class Compra {
                     "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra) +
                     "\nZona: " + zonaCompra +
                     "\nCantidad: " + cantidad +
-                    "\nCodigo de Aficionado: " + codigoAficionado;
+                    "\nCodigo de Aficionado: " + codigoAficionado+
+                    "\n------------";
         }else{
             return "Código: " + codigoCompra +
                     "\nTipo: " + tipo +
@@ -165,7 +166,8 @@ public class Compra {
                     "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra)+
                     "\nDescripción: " +descripcionKit+
                     "\nCantidad: " + cantidad +
-                    "\nCodigo de Aficionado: " + codigoAficionado;
+                    "\nCodigo de Aficionado: " + codigoAficionado+
+                    "\n------------";
         }
     }
 

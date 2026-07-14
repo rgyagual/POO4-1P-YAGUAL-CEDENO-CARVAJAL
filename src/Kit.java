@@ -116,7 +116,8 @@ public class Kit {
         return nombreKit +
                 "\nIncluye: " + partidos +
                 "\n\nPrecio: " + precioKit +
-                "\nDisponibles: " + cantidadDisponible;
+                "\nDisponibles: " + cantidadDisponible+
+                "\n------------";
     }
 
 }
