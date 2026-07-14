@@ -1,7 +1,7 @@
 /*
 Aqui se genera los precios por entradas
 */
-public class PreciosMundiales {
+public class PrecioMundial {
     /*
      * Devuelve el precio de una entrada segun la zona y fase del mundial.
      * 
@@ -11,7 +11,7 @@ public class PreciosMundiales {
      * 
      * @return precio de la entrada.
      */
-    public static double Precios(Zona zona, Fases fase) {
+    public static double Precios(Zona zona, FasesMundial fase) {
         switch (fase) {
             case GRUPOS:
                 switch (zona) {
