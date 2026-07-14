@@ -32,6 +32,8 @@ public class Compra {
     /** FasesMundial elegida en la compra */
     private FasesMundial fase;
 
+    private String descripcionKit;
+
     // ===================================
     // CONSTRUCTOR
     // ===================================
@@ -46,8 +48,14 @@ public class Compra {
      * @param valorPagado      Valor total cancelado
      * @param codigoAficionado Codigo del Aficionado que realiza la compra
      */
-    public Compra(String tipo, String codigoReferencia, Date fechaCompra, int cantidad, double valorPagado,
-            String codigoAficionado, Zona zona) {
+    public Compra(String tipo,
+            String codigoReferencia,
+            Date fechaCompra,
+            int cantidad,
+            double valorPagado,
+            String codigoAficionado,
+            Zona zona) {
+
         this.tipo = tipo;
         this.codigoReferencia = codigoReferencia;
         this.fechaCompra = fechaCompra;
@@ -55,6 +63,27 @@ public class Compra {
         this.valorPagado = valorPagado;
         this.codigoAficionado = codigoAficionado;
         this.zonaCompra = zona;
+        this.cantidad = cantidad;
+        contador++;
+        generarCodigoCompra();
+    }
+
+    public Compra(String tipo,
+            String codigoReferencia,
+            Date fechaCompra,
+            int cantidad,
+            double valorPagado,
+            String codigoAficionado,
+            String descripcionKit) {
+
+        this.tipo = tipo;
+        this.codigoReferencia = codigoReferencia;
+        this.fechaCompra = fechaCompra;
+        this.cantidad = cantidad;
+        this.valorPagado = valorPagado;
+        this.codigoAficionado = codigoAficionado;
+        this.descripcionKit = descripcionKit;
+        this.zonaCompra = null;
         this.cantidad = cantidad;
         contador++;
         generarCodigoCompra();
@@ -102,6 +131,9 @@ public class Compra {
     public FasesMundial getfase() {
         return fase;
     }
+    public String getDescripcionKit() {
+        return descripcionKit;
+    }
     // ================================
 
     /**
@@ -119,19 +151,35 @@ public class Compra {
      */
     @Override
     public String toString() {
-        return "Código: " + codigoCompra +
-                "\nTipo: " + tipo +
-                "\nCodigo de Referencia: " + codigoReferencia +
-                "\nFecha: " + fechaCompra +
-                "\nZona: " + zonaCompra +
-                "\nCantidad: " + cantidad +
-                "\nCodigo de Aficionado: " + codigoAficionado;
+        if (zonaCompra != null) {
+            return "Código: " + codigoCompra +
+                    "\nTipo: " + tipo +
+                    "\nCodigo de Referencia: " + codigoReferencia +
+                    "\nFecha: " + fechaCompra +
+                    "\nZona: " + zonaCompra +
+                    "\nCantidad: " + cantidad +
+                    "\nCodigo de Aficionado: " + codigoAficionado;
+        }else{
+            return "Código: " + codigoCompra +
+                    "\nTipo: " + tipo +
+                    "\nCodigo de Referencia: " + codigoReferencia +
+                    "\nFecha: " + fechaCompra +
+                    "\nDescripción: " +descripcionKit+
+                    "\nCantidad: " + cantidad +
+                    "\nCodigo de Aficionado: " + codigoAficionado;
+        }
     }
 
     public void agregarCompraTxt() {
+        if(zonaCompra != null){
         ManejoArchivos.EscribirArchivo("compras.txt",
                 codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + fechaCompra + "|" + zonaCompra + "|"
                         + cantidad + "|" + codigoAficionado);
+        }else{
+            ManejoArchivos.EscribirArchivo("compras.txt",
+                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + fechaCompra + "|" + descripcionKit + "|"
+                        + cantidad + "|" + codigoAficionado);
+        }
     }
 
 }
