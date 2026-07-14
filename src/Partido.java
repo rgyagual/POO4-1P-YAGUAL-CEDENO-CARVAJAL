@@ -8,6 +8,7 @@ public class Partido {
     private Date fechaPartido;
     private String estadio;
     private String ciudad;
+    private String faseEnum;
     private FasesMundial fase;
     private int capacidad;
     private int entradaGeneral;
@@ -16,8 +17,8 @@ public class Partido {
 
     public Partido(String codigoPartido, String equipoLocal,
             String equipoVisitante, Date fechaPartido,
-            String estadio, String ciudad,
-            FasesMundial fase, int capacidad,
+            String estadio, String ciudad, 
+            String faseEnum, int capacidad,
             int entradaGeneral, int entradaPreferencial,
             int entradaVip, double precioGeneral,
             double precioPreferencial, double precioVip) {
@@ -28,11 +29,31 @@ public class Partido {
         this.fechaPartido = fechaPartido;
         this.estadio = estadio;
         this.ciudad = ciudad;
-        this.fase = fase;
         this.capacidad = capacidad;
         this.entradaGeneral = entradaGeneral;
         this.entradaPreferencial = entradaPreferencial;
         this.entradaVip = entradaVip;
+        this.faseEnum = faseEnum;
+        switch (faseEnum){
+            case "Fase de grupos":
+                fase=FasesMundial.GRUPOS;                
+                break;
+            case "Octavos de final":
+                fase=FasesMundial.OCTAVOS;
+                break;
+            case "Cuartos de final":
+                fase=FasesMundial.CUARTOS;
+                break;
+            case "Semifinal":
+                fase=FasesMundial.SEMIFINAL;
+                break;
+            case "Final":
+                fase=FasesMundial.FINAL;
+                break;        
+            default:
+                fase=null;
+                break;
+        }
     }
 
     public String getCodigoPartido() {
@@ -81,6 +102,34 @@ public class Partido {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public String getFaseEnum(){
+        return faseEnum;
+    }
+
+    public void setFaseEnum(String faseEnum){
+        this.faseEnum=faseEnum;
+        switch (faseEnum){
+            case "Fase de grupos":
+                fase=FasesMundial.GRUPOS;                
+                break;
+            case "Octavos de final":
+                fase=FasesMundial.OCTAVOS;
+                break;
+            case "Cuartos de final":
+                fase=FasesMundial.CUARTOS;
+                break;
+            case "Semifinal":
+                fase=FasesMundial.SEMIFINAL;
+                break;
+            case "Final":
+                fase=FasesMundial.FINAL;
+                break;        
+            default:
+                fase=null;
+                break;
+        }
     }
 
     public FasesMundial getFase() {
