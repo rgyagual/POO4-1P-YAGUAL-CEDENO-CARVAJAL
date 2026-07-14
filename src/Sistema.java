@@ -152,8 +152,7 @@ public class Sistema {
     /**
      * Carga la información de los partidos desde el archivo de texto
      * y crea los objetos Partido correspondientes.
-     *
-     * @throws ParseException si ocurre un error al convertir la fecha.
+     * 
      */
     public void cargarPartidos() {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -165,6 +164,8 @@ public class Sistema {
             String equipoLocal = datos_partido[1];
             String equipoVisitante = datos_partido[2];
             Date fecha = null;
+            // Se utiliza try-catch para manejar la Excepcion ParseException, debido a que
+            // es obligatorio manejar la excepcion al usar DateFormat.parse()
             try {
                 fecha = formatoFecha.parse(datos_partido[3]);
             } catch (ParseException e) {
@@ -178,21 +179,13 @@ public class Sistema {
             int capacidadPreferencial = Integer.parseInt(datos_partido[8]);
             int capacidadVip = Integer.parseInt(datos_partido[9]);
             String fase = datos_partido[10];
-            FasesMundial faseEnum = null;
-            switch (fase) {
-                case "Fase de grupos":
-                    faseEnum = FasesMundial.GRUPOS;                    
-                    break;
-            
-                default:
-                    break;
-            }
+
             Partido p = new Partido(codigo, equipoLocal,
                     equipoVisitante,
                     fecha,
                     estadio,
                     ciudad,
-                    FasesMundial.valueOf(fase), // Convierte el texto de la fase al enum correspondiente.
+                    fase, // Convierte el texto de la fase al enum correspondiente.
                     capacidad,
                     capacidadGeneral,
                     capacidadPreferencial,
@@ -326,6 +319,7 @@ public class Sistema {
         String partidoCompra = "";
         String codigoPartido = "";
         for (Kit k : kits) {
+            
             if (kitCompra.getCodigoKit().equals(k.getCodigoKit())) {
                 for (Partido p : k.getPartidosIncluidos()) {
                     partidoCompra = p.getEquipoLocal() + " vs " + p.getEquipoVisitante();
@@ -338,7 +332,7 @@ public class Sistema {
                 + c.getFechaCompra() +
                 ".\n\nPartido: " + partidoCompra +
                 "\nCódigo del partido: " + codigoPartido +
-                "\nZona: " + c.getZonaCompra() +
+                "\nZona: " + c.getDescripcionKit() +
                 "\nCantidad: " + c.getCantidad() +
                 "\nValor Pagado " + c.getvalorPagado();
         enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
@@ -377,8 +371,6 @@ public class Sistema {
 
     /** Menu a mostrar para el Aficionado */
     private void menuAficionado() {
-        System.out.println("Identidad confirmada.");
-        System.out.println("Menú de Aficionado: ");
         System.out.println("1. Consultar partidos");
         System.out.println("2. Comprar entrada");
         System.out.println("3. Comprar Kit de entradas");
@@ -389,7 +381,6 @@ public class Sistema {
 
     /** Menu a mostrar para el Organizador */
     private void menuOrganizador() {
-        System.out.println("Menú de Organizador:");
         System.out.println("1. Consultar entradas");
         System.out.println("2. Generar Reporte");
         System.out.println("3. Salir");
@@ -431,7 +422,6 @@ public class Sistema {
         System.out.println("Elija la zona\na. GENERAL\nb. PREFERENCIAL\nc.VIP: ");
         System.out.print("Opcion: ");
         String zonaElegida = sc.nextLine();
-        sc.nextLine();
         Zona zona;
         switch (zonaElegida) {
             case "a":
@@ -516,46 +506,55 @@ public class Sistema {
                     String validarNumero = sc.nextLine();
                     // Muestra menú de opciones de Aficionado
                     if (validarNumero.equals("S")) {
-                        menuAficionado();
-                        int opcionElegida = sc.nextInt();
-                        sc.nextLine();
-                        switch (opcionElegida) {
-                            case 1:
-                                consultarPartidos();
-                                break;
-                            case 2:
-                                comprarEntrada(af);
-                                break;
-                            case 3:
-                                comprarKit(af);
-                                break;
-                            case 4:
-                                af.consultarEntradas(af.getHistorialCompras());
-                                break;
-                            case 5:
-                                System.out.println("Saliendo");
-                                return;
-                            default:
-                                System.out.println("Opción elegida inválida");
-                                break;
-                        }
+                        System.out.println("Identidad confirmada.");
+                        System.out.println("Menú de Aficionado: ");
+                        int opcionElegida;
+                        do {
+                            menuAficionado();
+                            opcionElegida = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcionElegida) {
+                                case 1:
+                                    consultarPartidos();
+                                    break;
+                                case 2:
+                                    comprarEntrada(af);
+                                    break;
+                                case 3:
+                                    comprarKit(af);
+                                    break;
+                                case 4:
+                                    af.consultarEntradas(af.getHistorialCompras());
+                                    break;
+                                case 5:
+                                    System.out.println("Saliendo");
+                                    return;
+                                default:
+                                    System.out.println("Opción elegida inválida");
+                                    break;
+                            }
+                        } while (opcionElegida != 5);
 
-                    } else {
-                        errorAutenticacion();
-                        break;
+                    }else {
+                    errorAutenticacion();
+                    break;
                     }
-                    // Si el usuario autenticado es un Organizador
-                } else if (u instanceof Organizador) {
-                    Organizador og = (Organizador) u;
-                    System.out.println("Rol detectado: ORGANIZADOR");
-                    System.out.println("Bienvenido, " + og.getNombres() + " " + og.getApellidos());
-                    System.out.println("Empresa asignada: " + og.getEmpresa());
-                    System.out.print("Esta empresa es correcta(S/N): ");
-                    String validarEmpresa = sc.nextLine();
-                    // Muestra menú de opciones de Organizador
-                    if (validarEmpresa.equals("S")) {
+                    return;
+                // Si el usuario autenticado es un Organizador
+            } else if (u instanceof Organizador) {
+                Organizador og = (Organizador) u;
+                System.out.println("Rol detectado: ORGANIZADOR");
+                System.out.println("Bienvenido, " + og.getNombres() + " " + og.getApellidos());
+                System.out.println("Empresa asignada: " + og.getEmpresa());
+                System.out.print("Esta empresa es correcta(S/N): ");
+                String validarEmpresa = sc.nextLine();
+                // Muestra menú de opciones de Organizador
+                if (validarEmpresa.equals("S")) {
+                    System.out.println("Menú de Organizador:");
+                    int opcionElegida;
+                    do {
                         menuOrganizador();
-                        int opcionElegida = sc.nextInt();
+                        opcionElegida = sc.nextInt();
                         sc.nextLine();
                         switch (opcionElegida) {
                             case 1:
@@ -572,15 +571,15 @@ public class Sistema {
                                 System.out.println("Opción elegida inválida");
                                 break;
                         }
-                    } else {
-                        errorAutenticacion();
-                        break;
-
-                    }
+                    } while (opcionElegida != 3);
+                } else {
+                    errorAutenticacion();
+                }
+                return;
                 }
             }
         }
-        if (!autenticado) {
+        if (!autenticado){
             System.out.println("Usuario o contraseña incorrectos.");
         }
     }
