@@ -41,13 +41,6 @@ public class Organizador extends Usuario {
         }
     }
 
-    public void establecerPrecios(Partido p, double precioGeneral,
-            double precioPreferencial, double precioVip) {
-        p.setPrecioGeneral(precioGeneral);
-        p.setPrecioPreferencial(precioPreferencial);
-        p.setPrecioVip(precioVip);
-    }
-
     public void generarReporte(List<Compra> compras) {
         int totalEntradas = 0;
         int totalKits = 0;
