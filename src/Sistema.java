@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 /**Librerias necesarias para enviar un email */
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -156,7 +155,7 @@ public class Sistema {
      *
      * @throws ParseException si ocurre un error al convertir la fecha.
      */
-    public void cargarPartidos() throws ParseException {
+    public void cargarPartidos() {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<String> list_partidos = ManejoArchivos.LeeFichero("partidos.txt");
         for (String datos : list_partidos) {
@@ -165,7 +164,13 @@ public class Sistema {
             String codigo = datos_partido[0];
             String equipoLocal = datos_partido[1];
             String equipoVisitante = datos_partido[2];
-            Date fecha = formatoFecha.parse(datos_partido[3]);
+            Date fecha = null;
+            try {
+                fecha = formatoFecha.parse(datos_partido[3]);
+            } catch (ParseException e) {
+                System.out.println("Error al convertir la fecha");
+            }
+
             String estadio = datos_partido[4];
             String ciudad = datos_partido[5];
             int capacidad = Integer.parseInt(datos_partido[6]);
@@ -173,22 +178,25 @@ public class Sistema {
             int capacidadPreferencial = Integer.parseInt(datos_partido[8]);
             int capacidadVip = Integer.parseInt(datos_partido[9]);
             String fase = datos_partido[10];
-
-            Partido p = new Partido(
-                    codigo,
-                    equipoLocal,
+            FasesMundial faseEnum = null;
+            switch (fase) {
+                case "Fase de grupos":
+                    faseEnum = FasesMundial.GRUPOS;                    
+                    break;
+            
+                default:
+                    break;
+            }
+            Partido p = new Partido(codigo, equipoLocal,
                     equipoVisitante,
                     fecha,
                     estadio,
                     ciudad,
-                    fase,
+                    FasesMundial.valueOf(fase), // Convierte el texto de la fase al enum correspondiente.
                     capacidad,
                     capacidadGeneral,
                     capacidadPreferencial,
-                    capacidadVip,
-                    0.0,
-                    0.0,
-                    0.0);
+                    capacidadVip);
             partidos.add(p);
         }
 
@@ -288,7 +296,7 @@ public class Sistema {
      * @param af Aficionado comprador
      * @param c  Compra realizada por el aficionado
      */
-    public void notificar(Aficionado af, Compra c) {
+    private void notificar(Aficionado af, Compra c) {
         String partidoCompra = "";
         for (Partido p : partidos) {
             if (p.getCodigoPartido().equals(c.getCodigoReferencia())) {
@@ -302,7 +310,7 @@ public class Sistema {
                 ".\nPartido: " + partidoCompra + "\nCódigo del Partido: " + c.getCodigoReferencia() +
                 "\nZona: " + c.getZonaCompra() +
                 "\nCantidad: " + c.getCantidad() +
-                "\nValor Pagado: $" + c.getValorPagado() +
+                "\nValor Pagado: $" + c.getvalorPagado() +
                 "\nGracias por adquirir sus entradas para el Mundial. Recuerde conservar el código de compra para futuras\nconsultas.";
         enviarCorreo(af.correo, "Compra de entradas realizada", mensaje);
     }
@@ -314,7 +322,7 @@ public class Sistema {
      * @param af         Aficionado comprador
      * @param kitCoompra Kit comprado por el aficionado
      */
-    public void notificar(Aficionado af, Kit kitCompra, Compra c) {
+    private void notificar(Aficionado af, Kit kitCompra, Compra c) {
         String partidoCompra = "";
         String codigoPartido = "";
         for (Kit k : kits) {
@@ -332,7 +340,7 @@ public class Sistema {
                 "\nCódigo del partido: " + codigoPartido +
                 "\nZona: " + c.getZonaCompra() +
                 "\nCantidad: " + c.getCantidad() +
-                "\nValor Pagado " + c.getValorPagado();
+                "\nValor Pagado " + c.getvalorPagado();
         enviarCorreo(af.correo, "Compra de Kit realizado", mensaje);
     };
 
@@ -341,14 +349,14 @@ public class Sistema {
      * 
      * @param o Organizador que genera el reporte
      */
-    public void notificar(Organizador o) {
+    private void notificar(Organizador o) {
         int totalEntradas = 0;
         int totalKits = 0;
         int totalCompras = compras.size();
         double totalRecaudado = 0;
 
         for (Compra c : compras) {
-            totalRecaudado += c.getValorPagado();
+            totalRecaudado += c.getvalorPagado();
 
             if (c.getTipo().equals("ENTRADA")) {
                 totalEntradas += c.getCantidad();
@@ -368,7 +376,7 @@ public class Sistema {
     }
 
     /** Menu a mostrar para el Aficionado */
-    public void menuAficionado() {
+    private void menuAficionado() {
         System.out.println("Identidad confirmada.");
         System.out.println("Menú de Aficionado: ");
         System.out.println("1. Consultar partidos");
@@ -380,7 +388,7 @@ public class Sistema {
     }
 
     /** Menu a mostrar para el Organizador */
-    public void menuOrganizador() {
+    private void menuOrganizador() {
         System.out.println("Menú de Organizador:");
         System.out.println("1. Consultar entradas");
         System.out.println("2. Generar Reporte");
@@ -389,14 +397,14 @@ public class Sistema {
     }
 
     /** Mensajes al mostrar cuando suceda un error de Autenticación */
-    public void errorAutenticacion() {
+    private void errorAutenticacion() {
         System.out.println("Verificación fallida.");
         System.out.println("Por motivos de seguridad se cerrará la sesión");
         System.out.println("\nSaliendo del sistema...");
     }
 
     /** Método que muestra todos los partidos disponiles y su información */
-    public void consultarPartidos() {
+    private void consultarPartidos() {
         System.out.println("Partidos encontrados: ");
         for (int i = 0; i < partidos.size(); i++) {
             System.out.println((i + 1) + ". " + partidos.get(i));
@@ -409,10 +417,10 @@ public class Sistema {
      * 
      * @param af Usuario aficionado que realizará la compra
      */
-    public void comprarEntrada(Aficionado af) {
+    private void comprarEntrada(Aficionado af) {
         System.out.println("Ingrese código del partido: ");
         String codigoPartido = sc.nextLine();
-        //Partido del que se comprará entradas
+        // Partido del que se comprará entradas
         Partido partidoCompra = null;
         for (Partido p : partidos) {
             if (p.getCodigoPartido().equals(codigoPartido)) {
@@ -451,24 +459,31 @@ public class Sistema {
         notificar(af, c);
     }
 
-/**
- *  Implementa la compra de Kits, solicitando los datos necesarios del 
- *  usuario aficionado y genera la notificación por correo
- * @param af Usuario aficionado que realizará la compra
- */
-    public void comprarKit(Aficionado af){
-        //Mostrar Kits disponibles
-        for(int i = 0;i<kits.size();i++){
+    /**
+     * Implementa la compra de Kits, solicitando los datos necesarios del
+     * usuario aficionado y genera la notificación por correo
+     * 
+     * @param af Usuario aficionado que realizará la compra
+     */
+    private void comprarKit(Aficionado af) {
+        // Mostrar Kits disponibles
+        for (int i = 0; i < kits.size(); i++) {
             System.out.println((i + 1) + ". " + kits.get(i));
         }
         System.out.print("Ingresa el número de kit a comprar: ");
         int kitElegido = sc.nextInt();
         sc.nextLine();
-        Kit kitCompra = kits.get(kitElegido-1);
+        Kit kitCompra = kits.get(kitElegido - 1);
         System.out.print("Ingrese su número de Tarjeta: ");
         String numTarjeta = sc.nextLine();
         Compra compraKit = af.comprar(kitCompra, numTarjeta);
         notificar(af, kitCompra, compraKit);
+    }
+
+    private void generarReporte(Organizador o) {
+        o.generarReporte(compras);
+        notificar(o);
+
     }
 
     /**
@@ -547,7 +562,7 @@ public class Sistema {
                                 og.consultarEntradas(compras);
                                 break;
                             case 2:
-                                og.generarReporte(compras);
+                                generarReporte(og);
                                 break;
                             case 3:
                                 System.out.println("Saliendo del sistema");
@@ -570,4 +585,7 @@ public class Sistema {
         }
     }
 
+    public void cerrarSistema() {
+        sc.close();
+    }
 }

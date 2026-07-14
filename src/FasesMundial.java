@@ -7,5 +7,6 @@ public enum FasesMundial {
     OCTAVOS,
     CUARTOS,
     SEMIFINAL,
+    TERCER_LUGAR,
     FINAL,
 }

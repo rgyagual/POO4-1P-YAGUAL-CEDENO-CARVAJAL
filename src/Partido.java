@@ -19,8 +19,7 @@ public class Partido {
             String estadio, String ciudad,
             FasesMundial fase, int capacidad,
             int entradaGeneral, int entradaPreferencial,
-            int entradaVip, double precioGeneral,
-            double precioPreferencial, double precioVip) {
+            int entradaVip) {
 
         this.codigoPartido = codigoPartido;
         this.equipoLocal = equipoLocal;
