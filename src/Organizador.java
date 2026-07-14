@@ -41,11 +41,12 @@ public class Organizador extends Usuario {
         }
     }
 
-    public void establecerPrecios(Partido p, double precioGeneral, 
-            double precioPreferencial,double precioVip){
+    public void establecerPrecios(Partido p, double precioGeneral,
+            double precioPreferencial, double precioVip) {
         p.setPrecioGeneral(precioGeneral);
         p.setPrecioPreferencial(precioPreferencial);
         p.setPrecioVip(precioVip);
+    }
 
     public void generarReporte(List<Compra> compras) {
         int totalEntradas = 0;
@@ -63,15 +64,14 @@ public class Organizador extends Usuario {
             }
 
         }
-        System.out.println("-----GENERAR REPORTE DE VENTAS-----");
+        System.out.println("===== GENERAR REPORTE DE VENTAS =====");
         System.out.println("Resumen de ventas regisradas: ");
         System.out.println("Total de compras: " + totalCompras);
         System.out.println("Compras por tipo:");
-        System.out.println("Total de Entradas Vendidas: " + totalEntradas);
-        System.out.println("Total de Entradas Kits: " + totalKits);
-        System.out.println("Total de dinero generado: ");
+        System.out.println("Entradas: " + totalEntradas);
+        System.out.println("Kits: " + totalKits);
+        System.out.println("Monto toal recaudado: ");
         System.out.printf("$%,.2f\n", total);
-
 
     }
 }

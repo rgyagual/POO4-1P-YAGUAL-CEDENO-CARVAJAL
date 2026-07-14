@@ -404,8 +404,8 @@ public class Sistema {
     }
 
     /**
-     * Implementa la compra de entradas, solicitando los datos neesarios del
-     * ususario y generando la notificación por correo
+     * Implementa la compra de entradas, solicitando los datos necesarios del
+     * usuario y genera la notificación por correo
      * 
      * @param af Usuario aficionado que realizará la compra
      */
@@ -450,22 +450,28 @@ public class Sistema {
         notificar(af, c);
         sc.close();
     }
-/** Metodo comprarKit */
+
+/**
+ *  Implementa la compra de Kits, solicitando los datos necesarios del 
+ *  usuario aficionado y genera la notificación por correo
+ * @param af Usuario aficionado que realizará la compra
+ */
     public void comprarKit(Aficionado af){
         //Mostrar Kits disponibles
         Scanner sc = new Scanner(System.in);
-        for(int i = 0, i<kits.size(),i++){
-            System.out.println((i + 1) + ". " + k.get(i))
+        for(int i = 0;i<kits.size();i++){
+            System.out.println((i + 1) + ". " + kits.get(i));
         }
-        System.out.print("Ingresa el número de kit a comprar: ")
+        System.out.print("Ingresa el número de kit a comprar: ");
         int kitElegido = sc.nextInt();
         sc.nextLine();
-        Kit kitCompra = kits.get(kitElegido-1)
-        System.out.println("Ingrese su número de Tarjeta: ")
+        Kit kitCompra = kits.get(kitElegido-1);
+        System.out.print("Ingrese su número de Tarjeta: ");
         String numTarjeta = sc.nextLine();
         Compra compraKit = af.comprar(kitCompra, numTarjeta);
         notificar(af, kitCompra, compraKit);
     }
+
     /**
      * Permite a un usuario iniciar sesión en el sistema verificando
      * sus credenciales y mostrando el menú correspondiente según su rol.
@@ -508,12 +514,14 @@ public class Sistema {
                                 comprarEntrada(af);
                                 break;
                             case 3:
+                                comprarKit(af);
                                 break;
                             case 4:
                                 af.consultarEntradas(af.getHistorialCompras());
                                 break;
                             case 5:
-                                break;
+                                System.out.println("Saliendo");
+                                return;
                             default:
                                 System.out.println("Opción elegida inválida");
                                 break;
@@ -541,9 +549,11 @@ public class Sistema {
                                 og.consultarEntradas(compras);
                                 break;
                             case 2:
+                                og.generarReporte(compras);
                                 break;
                             case 3:
-                                break;
+                                System.out.println("Saliendo del sistema");
+                                return;
 
                             default:
                                 System.out.println("Opción elegida inválida");
