@@ -1,0 +1,10 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar"
+        ],
+        "exclude": [
+            "lib/jakarta.activation-2.0.1.jar"
+        ]
+    }
+}
