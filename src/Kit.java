@@ -53,50 +53,110 @@ public class Kit {
     // =========================
     // Getter y Setters
     // =========================
+    /**
+     * Devuelve el código del Kit
+     *
+     * @return codigo del kit
+     */
     public String getCodigoKit() {
         return codigoKit;
     }
 
+    /**
+     * Establece o actualiza el código del Kit
+     * 
+     * @param codigoKit código de kit a asignar
+     */
     public void setCodigoKit(String codigoKit) {
         this.codigoKit = codigoKit;
     }
 
+    /**
+     * Devuelve el nombre del Kit
+     * 
+     * @return nombre del kit
+     */
     public String getNombreKit() {
         return nombreKit;
     }
 
+    /**
+     * Establece o actualiza el nombre del kit
+     * 
+     * @param nombreKit nombre de Kit a asignar
+     */
     public void setNombreKit(String nombreKit) {
         this.nombreKit = nombreKit;
     }
 
+    /**
+     * Devuelve la descripción del Kit
+     * 
+     * @return descripción del kit
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * Establece o actualiza la descripción del kit
+     * 
+     * @param descripcion descripcion de kit a asignar
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Devuelve el precio del kit
+     * 
+     * @return precio del kit
+     */
     public double getPrecioKit() {
         return precioKit;
     }
 
+    /**
+     * Establece o actualiza el precio del Kit
+     * 
+     * @param precioKit precio de Kit a asignar
+     */
     public void setPrecioKit(double precioKit) {
         this.precioKit = precioKit;
     }
 
+    /**
+     * Devuelve la cantidad de Kits disponibles
+     * 
+     * @return cantidad de kits disponibles
+     */
     public int getCantidadDisponible() {
         return cantidadDisponible;
     }
 
+    /**
+     * Establece o actualiza la cantidad de kits
+     * 
+     * @param cantidadDisponible cantidad de kit a asignar
+     */
     public void setCantidadDisponible(int cantidadDisponible) {
         this.cantidadDisponible = cantidadDisponible;
     }
 
+    /**
+     * Devuelve la lista de los partidos incluidos en el Kit
+     * 
+     * @return lista de partidos incluidos en el Kit
+     */
     public ArrayList<Partido> getPartidosIncluidos() {
         return partidosIncluidos;
     }
 
+    /**
+     * Establece o actualiza la lista de partidos incluidos en el Kit
+     * 
+     * @param partidosIncluidos lista de partidos a asignar
+     */
     public void setPartidosIncluidos(ArrayList<Partido> partidosIncluidos) {
         this.partidosIncluidos = partidosIncluidos;
     }
@@ -116,7 +176,7 @@ public class Kit {
         return nombreKit +
                 "\nIncluye: " + partidos +
                 "\n\nPrecio: " + precioKit +
-                "\nDisponibles: " + cantidadDisponible+
+                "\nDisponibles: " + cantidadDisponible +
                 "\n------------";
     }
 

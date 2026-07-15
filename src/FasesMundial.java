@@ -5,10 +5,16 @@
  */
 
 public enum FasesMundial {
+    /** Fase de Grupos */
     GRUPOS,
+    /** Octavos de Final */
     OCTAVOS,
+    /** Cuartos de Final */
     CUARTOS,
+    /** Semi-final */
     SEMIFINAL,
+    /** Partido para Tercer Lugar */
     TERCER_LUGAR,
+    /** Final del Mundial */
     FINAL,
 }

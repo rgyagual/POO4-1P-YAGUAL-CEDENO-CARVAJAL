@@ -25,7 +25,7 @@ public class Compra {
     private double valorPagado;
     /** Codigo del Aficionado Comprador */
     private String codigoAficionado;
-    /** Zona elegida de la compra */
+    /** Categoría de ubicación del ticket */
     private Zona zonaCompra;
     /** Contador utilizado para generar código de compra */
     private static int contador = 0;
@@ -38,7 +38,7 @@ public class Compra {
     // ===================================
 
     /**
-     * Crea una nueva Compra con la información recopilada
+     * Crea una nueva Compra de Entradas con la información recopilada
      * 
      * @param tipo             Tipo de compra realizada
      * @param codigoReferencia Codigo del Kit o Entrada
@@ -46,6 +46,7 @@ public class Compra {
      * @param cantidad         Cantidad de elementos en la compra
      * @param valorPagado      Valor total cancelado
      * @param codigoAficionado Codigo del Aficionado que realiza la compra
+     * @param zona             zona asignada a la entrada
      */
     public Compra(String tipo,
             String codigoReferencia,
@@ -67,6 +68,17 @@ public class Compra {
         generarCodigoCompra();
     }
 
+    /**
+     * Crea una nueva Compra de kits con la información recopilada
+     * 
+     * @param tipo             Tipo de compra realizada
+     * @param codigoReferencia Codigo del Kit o Entrada
+     * @param fechaCompra      Fecha en la que se realiza la compra
+     * @param cantidad         Cantidad de elementos en la compra
+     * @param valorPagado      Valor total cancelado
+     * @param codigoAficionado Codigo del Aficionado que realiza la compra
+     * @param descripcionKit   Descripción del Kit comprado
+     */
     public Compra(String tipo,
             String codigoReferencia,
             Date fechaCompra,
@@ -91,45 +103,101 @@ public class Compra {
     // ================================
     // Getters y Setters
     // ================================
+    /**
+     * Devuelve el código de la Compra
+     * 
+     * @return codigo de la compra
+     */
     public String getCodigoCompra() {
         return codigoCompra;
     }
 
+    /**
+     * Devuelve el Tipo de compra
+     * 
+     * @return tipo de compra (Kit o Entrada)
+     */
     public String getTipo() {
         return tipo;
     }
 
+    /**
+     * Devuelve el codigo de Referencia ( Codigo del Kit o del Partido)
+     * 
+     * @return codigo de Referencia
+     */
     public String getCodigoReferencia() {
         return codigoReferencia;
     }
 
+    /**
+     * Devuelve la fecha de la compra
+     * 
+     * @return fecha de compra
+     */
     public Date getFechaCompra() {
         return fechaCompra;
     }
 
+    /**
+     * Devuelve la cantidad de entradas compradas
+     * 
+     * @return la cantidad de entradas
+     */
     public int getCantidad() {
         return cantidad;
     }
 
+    /**
+     * Devuelve el valor cancelado por la compra
+     * 
+     * @return valor total pagado
+     */
     public double getvalorPagado() {
         return valorPagado;
     }
 
+    /**
+     * Devuelve el codigo del comprador
+     * 
+     * @return codigo de Aficionado comprador
+     */
     public String getCodigoAficionado() {
         return codigoAficionado;
     }
 
+    /**
+     * Devuelve el conteo de compras
+     * 
+     * @return contador de compras
+     */
     public static int getContador() {
         return contador;
     }
 
+    /**
+     * Devuelve la zona seleccionada por el comprador
+     * 
+     * @return zona de ticket
+     */
     public Zona getZonaCompra() {
         return zonaCompra;
     }
 
+    /**
+     * Devuelve la Fase del Mundial
+     * 
+     * @return fase del mundial
+     */
     public FasesMundial getfase() {
         return fase;
     }
+
+    /**
+     * Devuelve la descripcion de un kit
+     * 
+     * @return descripcion de kit
+     */
     public String getDescripcionKit() {
         return descripcionKit;
     }
@@ -144,7 +212,8 @@ public class Compra {
     }
 
     /**
-     * Devuelve una representación en texto con la información de la compra.
+     * Devuelve una representación en texto con la información de la compra,
+     * evaluando si la compra es un Kit o una Entrada
      *
      * @return Cadena de texto con los datos de la compra.
      */
@@ -157,29 +226,36 @@ public class Compra {
                     "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra) +
                     "\nZona: " + zonaCompra +
                     "\nCantidad: " + cantidad +
-                    "\nCodigo de Aficionado: " + codigoAficionado+
+                    "\nCodigo de Aficionado: " + codigoAficionado +
                     "\n------------";
-        }else{
+        } else {
             return "Código: " + codigoCompra +
                     "\nTipo: " + tipo +
                     "\nCodigo de Referencia: " + codigoReferencia +
-                    "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra)+
-                    "\nDescripción: " +descripcionKit+
+                    "\nFecha: " + Sistema.FORMATO_FECHA.format(fechaCompra) +
+                    "\nDescripción: " + descripcionKit +
                     "\nCantidad: " + cantidad +
-                    "\nCodigo de Aficionado: " + codigoAficionado+
+                    "\nCodigo de Aficionado: " + codigoAficionado +
                     "\n------------";
         }
     }
 
+    /**
+     * Agrega la compra en el formato establecido a el archivo de texto compra.txt
+     * evaluando si es una Entrada o un Kit
+     * 
+     */
     public void agregarCompraTxt() {
-        if(zonaCompra != null){
-        ManejoArchivos.EscribirArchivo("compras.txt",
-                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + zonaCompra + "|"
-                        + cantidad + "|" +valorPagado+"|"+ codigoAficionado);
-        }else{
+        if (zonaCompra != null) {
             ManejoArchivos.EscribirArchivo("compras.txt",
-                codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + descripcionKit + "|"
-                        + cantidad + "|" + valorPagado+"|"+codigoAficionado);
+                    codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)
+                            + "|" + zonaCompra + "|"
+                            + cantidad + "|" + valorPagado + "|" + codigoAficionado);
+        } else {
+            ManejoArchivos.EscribirArchivo("compras.txt",
+                    codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)
+                            + "|" + descripcionKit + "|"
+                            + cantidad + "|" + valorPagado + "|" + codigoAficionado);
         }
     }
 

@@ -37,7 +37,9 @@ public class Sistema {
     private ArrayList<Kit> kits = new ArrayList<>();
     /** Lista de Compras Totales realizadas */
     private ArrayList<Compra> compras = new ArrayList<>();
-    //
+    /**
+     * Variable estática de tipo SimpleDateFormat para darle formato a las fechas
+     */
     public static final SimpleDateFormat FORMATO_FECHA = new SimpleDateFormat("yyyy-MM-dd");
     /** Scanner para solicitar datos al usuario */
     Scanner sc = new Scanner(System.in);
@@ -45,34 +47,74 @@ public class Sistema {
     // Getters y Setters
     // =================================
 
+    /**
+     * Devuelve la lista de usuarios registrados en el sistema
+     *
+     * @return lista de usuarios
+     */
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
 
+    /**
+     * Establece o actualiza la lista de usuarios registrados en el sistema
+     * 
+     * @param usuarios lista de usuarios a asignar
+     */
     public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
 
+    /**
+     * Devuelve la lista de partidos programados
+     *
+     * @return lista de partidos
+     */
     public ArrayList<Partido> getPartidos() {
         return partidos;
     }
 
+    /**
+     * Establece o actualiza la lista de partidos programados
+     * 
+     * @param partidos lista de partidos a asignar
+     */
     public void setPartidos(ArrayList<Partido> partidos) {
         this.partidos = partidos;
     }
 
+    /**
+     * Devuelve la lista de kits de aficionados disponibles
+     *
+     * @return lista de kits
+     */
     public ArrayList<Kit> getKits() {
         return kits;
     }
 
+    /**
+     * Establece o actualiza la lista de kits de aficionados disponibles
+     * 
+     * @param kits lista de kits a asignar
+     */
     public void setKits(ArrayList<Kit> kits) {
         this.kits = kits;
     }
 
+    /**
+     * Devuelve el historial de compras realizadas en el sistema
+     *
+     * @return lista de compras
+     */
     public ArrayList<Compra> getCompras() {
         return compras;
     }
 
+    /**
+     * Establece o actualiza el historial de compras realizadas en el sistema
+     * 
+     * @param compras lista de compras a asignar
+     */
     public void setCompras(ArrayList<Compra> compras) {
         this.compras = compras;
     }
@@ -243,14 +285,21 @@ public class Sistema {
 
     }
 
+    /**
+     * Carga las compras realizadas por los Aficionados almacenadas en el archivo
+     * compras.txt
+     */
     public void cargarCompras() {
         ArrayList<String> list_compras = ManejoArchivos.LeeFichero("compras.txt");
+        // Obtencion de datos de Compra
         for (int i = 1; i < list_compras.size(); i++) {
             String datos = list_compras.get(i);
             String[] datosCompra = datos.split("\\|");
             String tipoCompra = datosCompra[1];
             String codigoReferencia = datosCompra[2];
             Date fechaCompra = null;
+            // Se utiliza try-catch para manejar la Excepcion ParseException, debido a que
+            // es obligatorio manejar la excepcion al usar DateFormat.parse()
             try {
                 fechaCompra = FORMATO_FECHA.parse(datosCompra[3]);
             } catch (ParseException e) {
@@ -385,9 +434,9 @@ public class Sistema {
         for (Compra c : compras) {
             totalRecaudado += c.getvalorPagado();
 
-            if (c.getTipo().equals("ENTRADA")) {
+            if (c.getTipo().equals("Entrada")) {
                 totalEntradas += c.getCantidad();
-            } else if (c.getTipo().equals("KIT")) {
+            } else if (c.getTipo().equals("Kit")) {
                 totalKits += c.getCantidad();
             }
         }

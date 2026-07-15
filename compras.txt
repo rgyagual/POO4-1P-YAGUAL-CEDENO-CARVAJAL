@@ -1,3 +1,1 @@
 codigoCompra|tipo|codigoReferencia|fechaCompra|descripcion/Zona|cantidadCompra|valorPagado|codigoAficionado
-C001|Entrada|M001|2026-07-14|VIP|2|500.0|A001
-C002|Kit|K004|2026-07-14|4 partidos destacados de fase de grupos|1|350.0|A001
