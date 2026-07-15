@@ -244,10 +244,10 @@ public class Sistema {
     }
 
     public void cargarCompras() {
-        ArrayList<String> list_compras = new ArrayList<>();
+        ArrayList<String> list_compras = ManejoArchivos.LeeFichero("compras.txt");
         for (int i = 1; i < list_compras.size(); i++) {
             String datos = list_compras.get(i);
-            String[] datosCompra = datos.split("//|");
+            String[] datosCompra = datos.split("\\|");
             String tipoCompra = datosCompra[1];
             String codigoReferencia = datosCompra[2];
             Date fechaCompra = null;
@@ -268,7 +268,6 @@ public class Sistema {
                     codigoAficionado,
                     zonaCompra);
             compras.add(c);
-            System.out.println("Compras cargadas: "+compras.size());
         }
 
     }

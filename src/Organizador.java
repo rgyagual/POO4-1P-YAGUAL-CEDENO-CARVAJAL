@@ -93,7 +93,7 @@ public class Organizador extends Usuario {
      */
     @Override
     public void consultarEntradas(ArrayList<Compra> compras) {
-        System.out.println("COMPRAS REGISTRADAS");
+        System.out.println("======COMPRAS REGISTRADAS======");
         for (Compra c : compras) {
             System.out.println(c);
         }
