@@ -175,11 +175,11 @@ public class Compra {
         if(zonaCompra != null){
         ManejoArchivos.EscribirArchivo("compras.txt",
                 codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + zonaCompra + "|"
-                        + cantidad + "|" + codigoAficionado);
+                        + cantidad + "|" +valorPagado+"|"+ codigoAficionado);
         }else{
             ManejoArchivos.EscribirArchivo("compras.txt",
                 codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + Sistema.FORMATO_FECHA.format(fechaCompra)+ "|" + descripcionKit + "|"
-                        + cantidad + "|" + codigoAficionado);
+                        + cantidad + "|" + valorPagado+"|"+codigoAficionado);
         }
     }
 

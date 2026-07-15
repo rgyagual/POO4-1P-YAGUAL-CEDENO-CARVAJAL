@@ -1,3 +1,4 @@
+Codigo|Nombre|Descripcion|Partidos|Precio|Disponibles
 K001|Kit Ecuador|Partidos fase grupos Ecuador|M001,M005,M009|250.00|30
 K002|Kit Argentina|Partidos fase grupos Argentina|M002,M006,M010|280.00|25
 K003|Kit Brasil|Partidos fase grupos Brasil|M003,M007,M011|300.00|20

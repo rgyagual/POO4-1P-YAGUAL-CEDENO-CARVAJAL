@@ -89,7 +89,8 @@ public class Sistema {
         ArrayList<String> list_aficionados = ManejoArchivos.LeeFichero("aficionados.txt");
         ArrayList<String> list_organizadores = ManejoArchivos.LeeFichero("organizadores.txt");
         // Obtención de datos usuario
-        for (String dato : list_usuarios) {
+        for (int i = 1; i < list_usuarios.size(); i++) {
+            String dato = list_usuarios.get(i);
             String[] dato_usuario = dato.split("\\|");
             String codigoUnico = dato_usuario[0];
             String cedula = dato_usuario[1];
@@ -102,7 +103,8 @@ public class Sistema {
 
             // Crea el objeto Aficionado utilizando la información de ambos archivos.
             if (rol.equals("A")) {
-                for (String linea : list_aficionados) {
+                for (int ii = 1; ii < list_aficionados.size(); ii++) {
+                    String linea = list_aficionados.get(ii);
                     String[] datos_aficionados = linea.split("\\|");
                     // datos aficionado
                     String celular = datos_aficionados[4];
@@ -124,7 +126,8 @@ public class Sistema {
                 }
                 // Crea el objeto Organizador utilizando la información de ambos archivos.
             } else if (rol.equals("O")) {
-                for (String linea : list_organizadores) {
+                for (int io = 1; io < list_organizadores.size(); io++) {
+                    String linea = list_organizadores.get(io);
                     String[] datos_organizador = linea.split("\\|");
                     // datos organizador
                     String empresa = datos_organizador[4];
@@ -157,7 +160,8 @@ public class Sistema {
      */
     public void cargarPartidos() {
         ArrayList<String> list_partidos = ManejoArchivos.LeeFichero("partidos.txt");
-        for (String datos : list_partidos) {
+        for (int i = 1; i < list_partidos.size(); i++) {
+            String datos = list_partidos.get(i);
             String[] datos_partido = datos.split("\\|");
             // Obtencion datos de partido
             String codigo = datos_partido[0];
@@ -202,7 +206,8 @@ public class Sistema {
     public void cargarKits() {
         ArrayList<String> list_kits = ManejoArchivos.LeeFichero("kits.txt");
         // Obtencion Datos Kits
-        for (String datos : list_kits) {
+        for (int i = 1; i < list_kits.size(); i++) {
+            String datos = list_kits.get(i);
             String[] datos_kits = datos.split("\\|");
             String codigo = datos_kits[0];
             String nombre = datos_kits[1];
@@ -234,6 +239,36 @@ public class Sistema {
                     partidosKits);
 
             kits.add(k);
+        }
+
+    }
+
+    public void cargarCompras() {
+        ArrayList<String> list_compras = new ArrayList<>();
+        for (int i = 1; i < list_compras.size(); i++) {
+            String datos = list_compras.get(i);
+            String[] datosCompra = datos.split("//|");
+            String tipoCompra = datosCompra[1];
+            String codigoReferencia = datosCompra[2];
+            Date fechaCompra = null;
+            try {
+                fechaCompra = FORMATO_FECHA.parse(datosCompra[3]);
+            } catch (ParseException e) {
+                System.out.println("Error al convertir la fecha");
+            }
+            String zonaCompra = datosCompra[4];
+            int cantidadCompra = Integer.parseInt(datosCompra[5]);
+            double valorPagado = Double.parseDouble(datosCompra[6]);
+            String codigoAficionado = datosCompra[7];
+            Compra c = new Compra(tipoCompra,
+                    codigoReferencia,
+                    fechaCompra,
+                    cantidadCompra,
+                    valorPagado,
+                    codigoAficionado,
+                    zonaCompra);
+            compras.add(c);
+            System.out.println("Compras cargadas: "+compras.size());
         }
 
     }
@@ -451,6 +486,8 @@ public class Sistema {
                 zona,
                 cantidadEntradas,
                 numTarjeta);
+
+        compras.add(c);
         notificar(af, c);
     }
 
@@ -473,6 +510,7 @@ public class Sistema {
         System.out.print("Ingrese su número de Tarjeta: ");
         String numTarjeta = sc.nextLine();
         Compra compraKit = af.comprar(kitCompra, numTarjeta);
+        compras.add(compraKit);
         notificar(af, kitCompra, compraKit);
     }
 

@@ -95,7 +95,7 @@ public class Organizador extends Usuario {
     public void consultarEntradas(ArrayList<Compra> compras) {
         System.out.println("COMPRAS REGISTRADAS");
         for (Compra c : compras) {
-            System.out.println(c.toString());
+            System.out.println(c);
         }
     }
 

@@ -1,3 +1,4 @@
+CodigoUnico|Cedula|Nombres|Apellidos|Celular|PaisFavorito
 A001|0923456789|Carlos|Mendoza|0991111111|Ecuador
 A002|0912345678|Ana|Lopez|0992222222|Argentina
 A003|0934567890|Miguel|Santos|0993333333|Brasil

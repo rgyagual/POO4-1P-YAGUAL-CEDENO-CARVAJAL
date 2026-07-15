@@ -4,6 +4,7 @@ public class Main {
         sistema.cargarUsuarios();
         sistema.cargarPartidos();
         sistema.cargarKits();
+        sistema.cargarCompras();
         sistema.iniciarSesion();
         sistema.cerrarSistema();
     }
