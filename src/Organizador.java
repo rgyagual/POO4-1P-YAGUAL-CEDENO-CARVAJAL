@@ -116,9 +116,9 @@ public class Organizador extends Usuario {
         for (Compra c : compras) {
             total += c.getvalorPagado();
 
-            if (c.getTipo().equals("ENTRADA")) {
+            if (c.getTipo().equals("Entrada")) {
                 totalEntradas += c.getCantidad();
-            } else if (c.getTipo().equals("KIT")) {
+            } else if (c.getTipo().equals("Kit")) {
                 totalKits += c.getCantidad();
             }
 

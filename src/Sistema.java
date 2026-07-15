@@ -311,7 +311,6 @@ public class Sistema {
             mensaje.setSubject(asunto);
             mensaje.setText(mensajeCorreo);
             Transport.send(mensaje);
-            System.out.println("Correo enviado.");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
