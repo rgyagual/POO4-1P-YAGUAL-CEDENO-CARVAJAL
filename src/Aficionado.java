@@ -165,6 +165,7 @@ public class Aficionado extends Usuario {
                     zona);
             compraNueva.agregarCompraTxt();
             historialCompras.add(compraNueva);
+            
             int entradasActualizadas = entradasDisponibles - cantidad;
             switch (zona) {
                 case GENERAL:
@@ -200,6 +201,7 @@ public class Aficionado extends Usuario {
             System.out.println("Total a pagar: " + totalPagar);
             compraNueva = new Compra("Kit", kit.getCodigoKit(), new Date(),
                     1, totalPagar, codigoUnico, kit.getDescripcion() );
+            kit.setCantidadDisponible(kit.getCantidadDisponible()-1);
             compraNueva.agregarCompraTxt();
             historialCompras.add(compraNueva);
         }
